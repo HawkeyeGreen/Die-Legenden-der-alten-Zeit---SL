@@ -42,7 +42,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
 
             // need some kind of check if the tables all are right
             // if not create them/ correct them
-            createTables();
+            // createTables();
         }
 
         public static DBManager getInstance(string dbName)
