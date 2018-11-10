@@ -25,14 +25,6 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             dbManager = DBManager.getInstance("mainDB");
-
-            SQLiteConnection connection = new SQLiteConnection(dbManager.MainConnectionString);
-            connection.Open();
-            SQLiteCommand command = new SQLiteCommand("INSERT INTO Nations VALUES (0,'Hauerreich')", connection);
-            command.ExecuteNonQuery();
-            command = new SQLiteCommand("INSERT INTO players VALUES ('Jörn', 0)", connection);
-            command.ExecuteNonQuery();
-            connection.Close();
         }
     }
 }
