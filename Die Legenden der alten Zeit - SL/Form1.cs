@@ -25,6 +25,19 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             dbManager = DBManager.getInstance("mainDB");
+
+
+
+            SQLiteConnection connection = new SQLiteConnection(dbManager.MainConnectionString);
+            connection.Open();
+            string command = "SELECT * FROM Players";
+            SQLiteDataAdapter da = new SQLiteDataAdapter(command, connection);
+            DataSet dataSet = new DataSet();
+            dataSet.Reset();
+            da.Fill(dataSet);
+            DataTable table = new DataTable();
+            table = dataSet.Tables[0];
+            dataGridViewPlayers.DataSource = table;
         }
     }
 }
