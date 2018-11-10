@@ -15,29 +15,87 @@ namespace Die_Legenden_der_alten_Zeit___SL
 {
     public partial class Form1 : Form
     {
-        DBManager dbManager;
+        private DBManager dbManager;
 
         public Form1()
         {
             InitializeComponent();
+            dbManager = DBManager.GetInstance("mainDB");
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dbManager = DBManager.getInstance("mainDB");
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            sQLiteConnection.Open();
+            SQLiteCommand command = new SQLiteCommand("INSERT INTO Players VALUES (0, 'Jörn', 0, 1,'none')", sQLiteConnection);
+            command.ExecuteNonQuery();
+            sQLiteConnection.Close();
 
+            UpdateAllFormData();
+        }
 
+        #region UpdateFuntions
+        // This method calls all other update-Methods in Order to update the global dataViews
+        // It will use intelligent ways to not collide with user-input data etc.
+        private void UpdateAllFormData()
+        {
+            UpdatePlayersAndNPCsTab();
+        }
 
-            SQLiteConnection connection = new SQLiteConnection(dbManager.MainConnectionString);
-            connection.Open();
-            string command = "SELECT * FROM Players";
-            SQLiteDataAdapter da = new SQLiteDataAdapter(command, connection);
+        private void UpdatePlayersAndNPCsTab()
+        {
+            int playerPlayerListIndex = 0;
+
+            if(PlayerPlayerList.SelectedIndex != null)
+            {
+                playerPlayerListIndex = PlayerPlayerList.SelectedIndex;
+            }
+
+            PlayerPlayerList.ClearSelected();
+            LoadPlayerTab();
+            if(PlayerPlayerList.Items.Count > playerPlayerListIndex)
+            {
+                PlayerPlayerList.SelectedIndex = playerPlayerListIndex;
+            }
+            else
+            {
+                PlayerPlayerList.SelectedIndex = 0;
+            }
+
+        }
+        #endregion
+
+        #region loadElements
+        private void LoadPlayerTab()
+        {
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            sQLiteConnection.Open();
+            SQLiteCommand command = new SQLiteCommand("SELECT PlayerName FROM Players", sQLiteConnection);
+            SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(command);
             DataSet dataSet = new DataSet();
             dataSet.Reset();
-            da.Fill(dataSet);
-            DataTable table = new DataTable();
-            table = dataSet.Tables[0];
-            dataGridViewPlayers.DataSource = table;
+            dataAdapter.Fill(dataSet);
+            PlayerPlayerList.DataSource = dataSet.Tables[0];
+            PlayerPlayerList.DisplayMember = "PlayerName";
+            PlayerPlayerList.ValueMember = "PlayerName";
+            sQLiteConnection.Close();
+        }
+        #endregion
+
+        private void PlayersChange_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PictureBox1_Click(object sender, EventArgs e)
+        {
+            SelectPlayerProfile.Title = "Wähle ein Bild für den Spieler aus";
+            SelectPlayerProfile.Filter = "Bilder|*.png; *.jpg; *.jpeg; *.bmp";
+            if(SelectPlayerProfile.ShowDialog() == DialogResult.OK)
+            {
+                pictureBoxPlayerProfile.ImageLocation = SelectPlayerProfile.FileName;
+                dbManager.ExecuteCommand("UPDATE Players SET ProfilePicturePath='" + SelectPlayerProfile.FileName + "' WHERE PlayerName='Jörn'");
+            }
         }
     }
 }

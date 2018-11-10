@@ -34,7 +34,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
                 SQLiteConnection.CreateFile(mainDBPath);
             }
 
-            mainConnectionString = createConnectionString(dbName);
+            mainConnectionString = CreateConnectionString(dbName);
 
             #region prefabs
             prefabs.Add(new Players());
@@ -45,7 +45,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
             // createTables();
         }
 
-        public static DBManager getInstance(string dbName)
+        public static DBManager GetInstance(string dbName)
         {
             if(instance == null)
             {
@@ -54,7 +54,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
             return instance;
         }
 
-        private void createTables()
+        private void CreateTables()
         {
             SQLiteConnection connection = new SQLiteConnection(mainConnectionString);
             connection.Open();
@@ -69,9 +69,18 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
             connection.Close();
         }
 
-        public static string createConnectionString(string dbName)
+        public static string CreateConnectionString(string dbName)
         {
             return "Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\" + dbName + ".sqlite" + ";Version=3;";
+        }
+
+        public void ExecuteCommand(string cmdString)
+        {
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            sQLiteConnection.Open();
+            SQLiteCommand command = new SQLiteCommand(cmdString, sQLiteConnection);
+            command.ExecuteNonQuery();
+            sQLiteConnection.Close();
         }
 
         #region prefab definitions
@@ -89,9 +98,10 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
         {
             public Players()
             {
-                List<string> tableCreators = new List<string>();
-
-                tableCreators.Add("CREATE TABLE players (name varchar(40) NOT NULL PRIMARY KEY)");
+                List<string> tableCreators = new List<string>
+                {
+                    "CREATE TABLE players (name varchar(40) NOT NULL PRIMARY KEY)"
+                };
 
                 TableDefinitions = tableCreators;
             }
