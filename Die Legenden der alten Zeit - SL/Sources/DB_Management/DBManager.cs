@@ -5,13 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
+using System.Data;
+
+using Zeus.Hermes;
 
 namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
 {
     /*  Class: DBManager
      *  This class provides ManagedConnections, opens and setups the database and checks if the database is fine.
      */
-    class DBManager
+    class DBManager : HermesLoggable
     {
         private static DBManager instance;
 
@@ -23,50 +26,31 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
             get => mainConnectionString;
         }
 
-        private List<Prefab> prefabs = new List<Prefab>();
+        long HermesLoggable.ID => 1338;
 
-        private DBManager(string dbName)
+        string HermesLoggable.Type => "DBManager";
+
+        private DBManager()
         {
-            mainDBPath = AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\" + dbName +".sqlite";
+            mainDBPath = AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\mainDB.sqlite";
             
             if(!File.Exists(mainDBPath))
             {
                 SQLiteConnection.CreateFile(mainDBPath);
             }
 
-            mainConnectionString = CreateConnectionString(dbName);
+            mainConnectionString = CreateConnectionString("mainDB");
 
-            #region prefabs
-            prefabs.Add(new Players());
-            #endregion
-
-            // need some kind of check if the tables all are right
-            // if not create them/ correct them
-            // createTables();
+            Hermes.getInstance().log(this, "Database was opened.");
         }
 
-        public static DBManager GetInstance(string dbName)
+        public static DBManager GetInstance()
         {
             if(instance == null)
             {
-                instance = new DBManager(dbName);
+                instance = new DBManager();
             }
             return instance;
-        }
-
-        private void CreateTables()
-        {
-            SQLiteConnection connection = new SQLiteConnection(mainConnectionString);
-            connection.Open();
-            foreach(Prefab prefab in prefabs)
-            {
-                foreach(string command in prefab.TableDefinitions)
-                {
-                    SQLiteCommand cmd = new SQLiteCommand(command, connection);
-                    cmd.ExecuteNonQuery();
-                }
-            }
-            connection.Close();
         }
 
         public static string CreateConnectionString(string dbName)
@@ -74,40 +58,38 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
             return "Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\" + dbName + ".sqlite" + ";Version=3;";
         }
 
-        public void ExecuteCommand(string cmdString)
+        public void ExecuteCommandNonQuery(string cmdString)
         {
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(mainConnectionString);
             sQLiteConnection.Open();
             SQLiteCommand command = new SQLiteCommand(cmdString, sQLiteConnection);
             command.ExecuteNonQuery();
             sQLiteConnection.Close();
+
+            Hermes.getInstance().log(this, "Following command was executed: " + cmdString);
         }
 
-        #region prefab definitions
-        class Prefab
+        public SQLiteDataReader ExecuteQuery(string cmdString)
         {
-            private List<string> sourceStrings;
-            public List<string> TableDefinitions
-            {
-                get => sourceStrings;
-                set => sourceStrings = value;
-            }
+            SQLiteConnection sqlite_conn;          // Database Connection Object
+            SQLiteCommand sqlite_cmd;             // Database Command Object
+            SQLiteDataReader sqlite_datareader;  // Data Reader Object
+
+            sqlite_conn = new SQLiteConnection(mainConnectionString);
+
+            sqlite_conn.Open();
+
+            sqlite_cmd = sqlite_conn.CreateCommand();
+
+            sqlite_cmd.CommandText = cmdString;
+
+            sqlite_datareader = sqlite_cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            Hermes.getInstance().log(this ,"Following command was executed and the DataReader returned: " + cmdString);
+
+            return sqlite_datareader;
+
         }
-
-        class Players : Prefab
-        {
-            public Players()
-            {
-                List<string> tableCreators = new List<string>
-                {
-                    "CREATE TABLE players (name varchar(40) NOT NULL PRIMARY KEY)"
-                };
-
-                TableDefinitions = tableCreators;
-            }
-        }
-
-        #endregion
     }
 
 }

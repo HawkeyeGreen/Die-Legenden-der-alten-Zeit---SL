@@ -10,27 +10,26 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 
 using Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management;
+using Die_Legenden_der_alten_Zeit___SL.Sources.EffectSystem;
+
+using Zeus.Hermes;
 
 namespace Die_Legenden_der_alten_Zeit___SL
 {
     public partial class Form1 : Form
     {
         private DBManager dbManager;
+        private GlobalEffectSystem globalEffectSystem;
 
         public Form1()
         {
             InitializeComponent();
-            dbManager = DBManager.GetInstance("mainDB");
+            dbManager = DBManager.GetInstance();
+            globalEffectSystem = GlobalEffectSystem.GetInstance();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
-            sQLiteConnection.Open();
-            SQLiteCommand command = new SQLiteCommand("INSERT INTO Players VALUES (0, 'Jörn', 0, 1,'none')", sQLiteConnection);
-            command.ExecuteNonQuery();
-            sQLiteConnection.Close();
-
             UpdateAllFormData();
         }
 
@@ -68,7 +67,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
         #region loadElements
         private void LoadPlayerTab()
         {
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance().MainConnectionString);
             sQLiteConnection.Open();
             SQLiteCommand command = new SQLiteCommand("SELECT PlayerName FROM Players", sQLiteConnection);
             SQLiteDataAdapter dataAdapter = new SQLiteDataAdapter(command);
@@ -94,8 +93,13 @@ namespace Die_Legenden_der_alten_Zeit___SL
             if(SelectPlayerProfile.ShowDialog() == DialogResult.OK)
             {
                 pictureBoxPlayerProfile.ImageLocation = SelectPlayerProfile.FileName;
-                dbManager.ExecuteCommand("UPDATE Players SET ProfilePicturePath='" + SelectPlayerProfile.FileName + "' WHERE PlayerName='Jörn'");
+                dbManager.ExecuteCommandNonQuery("UPDATE Players SET ProfilePicturePath='" + SelectPlayerProfile.FileName + "' WHERE PlayerName='Jörn'");
             }
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Hermes.getInstance().shutdownHermes();
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.PlayerManagement
         {
             List<string> playerNames = new List<string>();
 
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance("mainDB").MainConnectionString);
+            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance().MainConnectionString);
             sQLiteConnection.Open();
             SQLiteCommand command = new SQLiteCommand("SELECT PlayerName FROM Players", sQLiteConnection);
             SQLiteDataReader reader = command.ExecuteReader();
