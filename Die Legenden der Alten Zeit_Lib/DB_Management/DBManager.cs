@@ -9,12 +9,12 @@ using System.Data;
 
 using Zeus.Hermes;
 
-namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
+namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 {
     /*  Class: DBManager
      *  This class provides ManagedConnections, opens and setups the database and checks if the database is fine.
      */
-    class DBManager : HermesLoggable
+    public class DBManager : HermesLoggable
     {
         private static DBManager instance;
 
@@ -41,7 +41,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management
 
             mainConnectionString = CreateConnectionString("mainDB");
 
-            Hermes.getInstance().log(this, "Database was opened.");
+            Hermes.getInstance().log(this, "DBManager was instanced.");
         }
 
         public static DBManager GetInstance()

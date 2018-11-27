@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
-using Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management;
+using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 using System.Data;
 
-namespace Die_Legenden_der_alten_Zeit___SL.Sources.PlayerManagement
+namespace Die_Legenden_der_Alten_Zeit_Lib.PlayerManagement
 {
     class PlayerManager
     {

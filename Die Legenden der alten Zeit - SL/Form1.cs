@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
-using Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management;
-using Die_Legenden_der_alten_Zeit___SL.Sources.EffectSystem;
+using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
+using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem;
 
 using Zeus.Hermes;
 

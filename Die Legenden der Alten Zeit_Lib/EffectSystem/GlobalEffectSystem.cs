@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Die_Legenden_der_alten_Zeit___SL.Sources.DB_Management;
+using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 using System.Data.SQLite;
 using Zeus.Hermes;
 
-namespace Die_Legenden_der_alten_Zeit___SL.Sources.EffectSystem
+namespace Die_Legenden_der_Alten_Zeit_Lib.EffectSystem
 {
     /* Klasse: GlobalEffectSystem
      * !Stets nur eine Instanz - Singleton!
      * 
      * 
      */
-    class GlobalEffectSystem : HermesLoggable
+    public class GlobalEffectSystem : HermesLoggable
     {
         public long ID => 1339;
         public string Type => "GlobalEffectSystem";
@@ -27,6 +27,7 @@ namespace Die_Legenden_der_alten_Zeit___SL.Sources.EffectSystem
 
         private GlobalEffectSystem()
         {
+            Hermes.getInstance().log(this, "GlobalEffectSystem was instanced.");
             SQLiteDataReader reader = DB.ExecuteQuery("SELECT MAX(eID) FROM gEffectTable");
             reader.Read();
             nextID = Convert.ToInt32(reader["MAX(eID)"]) + 1;

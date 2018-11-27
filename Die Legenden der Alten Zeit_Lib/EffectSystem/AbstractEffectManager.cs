@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Die_Legenden_der_alten_Zeit___SL.Sources.EffectSystem
+namespace Die_Legenden_der_Alten_Zeit_Lib.EffectSystem
 {
     /**
      * Klasse: AbstractEffectManager
