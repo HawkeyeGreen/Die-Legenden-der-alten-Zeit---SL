@@ -59,6 +59,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterManagement\AttributeSystem\AttributeSet.cs" />
+    <Compile Include="CharacterManagement\AttributeSystem\StandardAttribute.cs" />
     <Compile Include="DB_Management\DBManager.cs" />
     <Compile Include="EffectSystem\AbstractEffectManager.cs" />
     <Compile Include="EffectSystem\GlobalEffectSystem.cs" />
