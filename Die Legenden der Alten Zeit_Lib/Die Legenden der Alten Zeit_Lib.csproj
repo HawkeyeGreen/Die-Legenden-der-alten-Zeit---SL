@@ -70,6 +70,10 @@
     <Compile Include="World\Map\Province.cs" />
     <Compile Include="World\Map\Region.cs" />
     <Compile Include="World\Map\Tile.cs" />
+    <Compile Include="World\Ressources\Food.cs" />
+    <Compile Include="World\Ressources\FoodSource.cs" />
+    <Compile Include="World\Ressources\Ressource.cs" />
+    <Compile Include="World\Ressources\RessourceSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\The Vault\Zeus\Zeus.csproj">
