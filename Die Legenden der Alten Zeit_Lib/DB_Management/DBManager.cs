@@ -71,11 +71,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 
         public SQLiteDataReader ExecuteQuery(string cmdString)
         {
+            Hermes.getInstance().log(this, "Following command will be executed " + cmdString);
+
             SQLiteConnection sqlite_conn;          // Database Connection Object
             SQLiteCommand sqlite_cmd;             // Database Command Object
             SQLiteDataReader sqlite_datareader;  // Data Reader Object
 
             sqlite_conn = new SQLiteConnection(mainConnectionString);
+
 
             sqlite_conn.Open();
 

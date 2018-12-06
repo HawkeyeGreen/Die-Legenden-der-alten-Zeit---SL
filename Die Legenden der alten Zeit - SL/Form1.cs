@@ -11,6 +11,7 @@ using System.Data.SQLite;
 
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem;
+using Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem;
 
 using Zeus.Hermes;
 
@@ -27,6 +28,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateAllFormData();
+            StandardAttribute attribute = new StandardAttribute(0);
         }
 
         #region UpdateFuntions

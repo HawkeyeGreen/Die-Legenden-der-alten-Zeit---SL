@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SQLite;
 using Zeus.Hermes;
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 
@@ -63,6 +64,30 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         }
 
         /// <summary>
+        /// Initialisiert das StandardAttribut via der Datenbank.
+        /// </summary>
+        /// <param name="ID">Die ID des StandardAttributs in der StandardAttribute-Tabelle.</param>
+        public StandardAttribute(int ID)
+        {
+            _ID = ID;
+
+            SQLiteDataReader reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes WHERE ID = " + _ID.ToString() + ";");
+            reader.Read();
+            attributeKey = reader["AttributeKey"].ToString();
+            reader.Close();
+
+            linkedKeys = new List<string>();
+            reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes_References WHERE ID = " + _ID.ToString() + ";");
+            while(reader.Read())
+            {
+                linkedKeys.Add(reader["ReferencedKey"].ToString());
+            }
+            reader.Close();
+
+            Hermes.getInstance().log(this, "The Standardattribute " + attributeKey + " was loaded from the database.");
+        }
+
+        /// <summary>
         /// Fügt den referencedKeys dieses Standardattributes einen neuen Schlüssel hinzu.
         /// </summary>
         /// <param name="key">Dieser Schlüssel wird als referenzierter Schlüssel hinzugefügt.</param>
@@ -108,11 +133,30 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         /// </summary>
         /// <param name="id">Wenn dieser Parameter auf -1 gesetzt wird, dann wird der Wert neu in die Tabelle eingeführt.</param>
         /// <returns>Die ID unter der das Attribut aktuell in der Tabelle zu finden ist.</returns>
-        public int SaveStandardAttribute(int id)
+        public int SaveStandardAttribute(int id = -1)
         {
             if(id == -1)
             {
+                SQLiteDataReader reader = DBManager.GetInstance().ExecuteQuery("SELECT Max(ID) FROM StandardAttributes;");
+                reader.Read();
+                if(reader[0] != DBNull.Value)
+                {
+                    _ID = Convert.ToInt32(reader[0]) + 1;
+                }
+                else
+                {
+                    _ID = 0;
+                }
 
+                id = _ID;
+                reader.Close();
+
+                DBManager.GetInstance().ExecuteQuery("INSERT INTO StandardAttributes(ID, AttributeKey) VALUES(" + _ID.ToString() + ", '" + attributeKey + "');");
+
+                foreach(string refKey in linkedKeys)
+                {
+                    DBManager.GetInstance().ExecuteQuery("INSERT INTO StandardAttributes_References VALUES(" + _ID.ToString() + ", '" + refKey + "');");
+                }
             }
             else
             {
@@ -120,6 +164,16 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
             }
 
             return id;
+        }
+
+        /// <summary>
+        /// Liest das StandardAttribut 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Ein StandardAttribut, das mit der gegebenen ID initialisiert wurde.</returns>
+        public static StandardAttribute LoadStandardAttribute(int id)
+        {
+            return new StandardAttribute(id);
         }
     }
 }
