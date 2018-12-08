@@ -4,17 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Zeus.Hermes;
+
 namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
 {
     /// <summary>
     /// Diese Klasse enthält eine Menge von Attributen. Es können manuell Attribute registriert werden oder
     /// via eines Standardattributs.
     /// </summary>
-    public class AttributeSet
+    public class AttributeSet : HermesLoggable
     {
+        private int _ID;
+        private string name;
         private Dictionary<string, int> attributes = new Dictionary<string, int>();
         private Dictionary<string, string> attributeLinking = new Dictionary<string, string>();
         private bool locked = false;
+
+        public long ID => _ID;
+
+        public string Type => "AttributeSet";
 
         /// <summary>
         /// Initialisiert das AttributSet mit Hilfe einer Liste von Standardattributen und Werten.
