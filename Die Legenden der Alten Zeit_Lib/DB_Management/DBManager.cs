@@ -11,15 +11,20 @@ using Zeus.Hermes;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 {
-    /*  Class: DBManager
-     *  This class provides ManagedConnections, opens and setups the database and checks if the database is fine.
-     */
+    /// <summary>
+    /// Klasse: DBManager
+    /// Diese Klasse stellt die Funktionen zur Nutzung der DBs bereit.
+    /// Sie verwaltet die zugreifbaren DBs und gibt Funktionen zum einfachen Ausführen von Queries bereit.
+    /// </summary>
     public class DBManager : HermesLoggable
     {
         private static DBManager instance;
 
         private string mainDBPath;
         private string mainConnectionString;
+
+        private bool locked = false;
+        private string threadKey = "Main";
 
         public string MainConnectionString
         {
@@ -51,6 +56,31 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                 instance = new DBManager();
             }
             return instance;
+        }
+
+        /// <summary>
+        /// Diese Methode prüft, ob die MainDB gerade von einem thread-belegt ist.
+        /// Sollte das der Fall sein, so kann überpüft werden, ob der gegebene Key den Zugang zur DB herstellt.
+        /// </summary>
+        /// <param name="myKey">Ein ThreadKey für die Database. Default=Main</param>
+        /// <returns>Wenn die Rückgabe true ist, so ist für diesen Thread der Zugriff gerade möglich.</returns>
+        public bool DatabaseAccesible(string myKey = "Main")
+        {
+            if(!locked)
+            {
+                // DB offen
+                return true;
+            }
+            else
+            {
+                if(threadKey == myKey)
+                {
+                    // Key öffnet Zugang
+                    return true;
+                }
+                //Falscher Key
+                return false;
+            }
         }
 
         public static string CreateConnectionString(string dbName)
