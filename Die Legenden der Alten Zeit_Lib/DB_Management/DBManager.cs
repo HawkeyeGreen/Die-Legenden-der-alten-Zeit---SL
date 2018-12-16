@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.IO;
 using System.Data;
-
 using Zeus.Hermes;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
