@@ -48,8 +48,9 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
                 listBoxStandardAttributes.ClearSelected();
                 listBoxStandardAttributes.Items.Clear();
+                standardAttributesRefGroup.Enabled = false;
 
-                while(tableReader.Read())
+                while (tableReader.Read())
                 {
                     listBoxStandardAttributes.Items.Add(tableReader.GetString(tableReader.GetOrdinal("AttributeKey")) + " {" + tableReader.GetValue(tableReader.GetOrdinal("ID")).ToString() + "}" );
                 }
@@ -57,12 +58,16 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 if(selectedIndex < listBoxStandardAttributes.Items.Count)
                 {
                     listBoxStandardAttributes.SelectedIndex = selectedIndex;
+                    standardAttributesRefGroup.Enabled = true;
                 }
             }
             else
             {
                 listBoxStandardAttributes.ClearSelected();
                 listBoxStandardAttributes.Items.Clear();
+                standardAttributeLinkingSpace_List.ClearSelected();
+                standardAttributeLinkingSpace_List.Items.Clear();
+                standardAttributesRefGroup.Enabled = false;
             }
 
             standardAttributeID.Text = "";
@@ -93,7 +98,37 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 StandardAttribute attribute = new StandardAttribute(ID);
                 standardAttributeID.Text = attribute.ID.ToString();
                 standardAttributeWorkingSpace_Name.Text = attribute.Key;
+                UpdateStandardAttributeReferences(ID);
                 deleteStandardattribute.Enabled = true;
+                standardAttributesRefGroup.Enabled = true;
+            }
+        }
+
+        private void UpdateStandardAttributeReferences(int attID)
+        {
+            DataTableReader tableReader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes_References WHERE ID=" + attID.ToString() + ";").CreateDataReader();
+
+            if (tableReader.HasRows)
+            {
+                int selectedIndex = standardAttributeLinkingSpace_List.SelectedIndex;
+
+                standardAttributeLinkingSpace_List.ClearSelected();
+                standardAttributeLinkingSpace_List.Items.Clear();
+
+                while (tableReader.Read())
+                {
+                    standardAttributeLinkingSpace_List.Items.Add(tableReader.GetString(tableReader.GetOrdinal("ReferencedKey")));
+                }
+
+                if (selectedIndex < standardAttributeLinkingSpace_List.Items.Count)
+                {
+                    standardAttributeLinkingSpace_List.SelectedIndex = selectedIndex;
+                }
+            }
+            else
+            {
+                standardAttributeLinkingSpace_List.ClearSelected();
+                standardAttributeLinkingSpace_List.Items.Clear();
             }
         }
 
@@ -153,14 +188,46 @@ namespace Die_Legenden_der_alten_Zeit___SL
             {
                 int ID = GetIDFromStandardstring(listBoxStandardAttributes.SelectedItem.ToString());
                 DBManager.GetInstance().ExecuteCommandNonQuery("DELETE FROM StandardAttributes WHERE ID=" + ID.ToString() + ";");
+                DBManager.GetInstance().ExecuteCommandNonQuery("DELETE FROM StandardAttributes_References WHERE ID=" + ID.ToString() + ";");
                 UpdateStandardAttributesTab();
             }
             else
             {
-                MessageBox.Show("Kein gültiges Elemenet ausgewählt!", "My Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                MessageBox.Show("Kein gültiges Element ausgewählt!", "My Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
             }
 
             deleteStandardattribute.Enabled = false;
+        }
+
+        private void addStandardAttributeReference_Click(object sender, EventArgs e)
+        {
+            StandardAttribute attribute = GetSelectedStandardAttribute();
+            string refKey = standardAttributesReferencedKey.Text;
+
+            if(attribute != null)
+            {
+                DBManager.GetInstance().ExecuteQuery("INSERT OR REPLACE INTO StandardAttributes_References VALUES(" + attribute.ID.ToString() + ",'" + refKey + "')");
+                standardAttributesReferencedKey.Text = "";
+                UpdateStandardAttributeReferences(Convert.ToInt32(attribute.ID));
+            }
+            else
+            {
+                MessageBox.Show("Fehler! Kein Standardattribute ausgewählt.", "My Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+            }
+
+        }
+
+        private StandardAttribute GetSelectedStandardAttribute()
+        {
+            if(listBoxStandardAttributes.SelectedItem != null)
+            {
+                return new StandardAttribute(GetIDFromStandardstring(listBoxStandardAttributes.SelectedItem.ToString()));
+            }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }
