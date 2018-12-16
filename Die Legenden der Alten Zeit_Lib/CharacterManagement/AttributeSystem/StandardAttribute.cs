@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.SQLite;
+using System.Data;
 using Zeus.Hermes;
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 
@@ -71,16 +71,15 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         {
             _ID = ID;
 
-            SQLiteDataReader reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes WHERE ID = " + _ID.ToString() + ";");
+            DataTableReader reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes WHERE ID = " + _ID.ToString() + ";").CreateDataReader();
             reader.Read();
-            attributeKey = reader["AttributeKey"].ToString();
-            reader.Close();
+            attributeKey = reader.GetValue(reader.GetOrdinal("AttributeKey")).ToString();
 
             linkedKeys = new List<string>();
-            reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes_References WHERE ID = " + _ID.ToString() + ";");
+            reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes_References WHERE ID = " + _ID.ToString() + ";").CreateDataReader();
             while(reader.Read())
             {
-                linkedKeys.Add(reader["ReferencedKey"].ToString());
+                linkedKeys.Add(reader.GetValue(reader.GetOrdinal("ReferencedKey")).ToString());
             }
             reader.Close();
 
@@ -137,7 +136,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         {
             if(id == -1)
             {
-                SQLiteDataReader reader = DBManager.GetInstance().ExecuteQuery("SELECT Max(ID) FROM StandardAttributes;");
+                DataTableReader reader = DBManager.GetInstance().ExecuteQuery("SELECT Max(ID) FROM StandardAttributes;").CreateDataReader();
                 reader.Read();
                 if(reader[0] != DBNull.Value)
                 {

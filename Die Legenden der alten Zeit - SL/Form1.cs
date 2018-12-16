@@ -28,7 +28,6 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateAllFormData();
-            StandardAttribute attribute = new StandardAttribute(0);
         }
 
         #region UpdateFuntions

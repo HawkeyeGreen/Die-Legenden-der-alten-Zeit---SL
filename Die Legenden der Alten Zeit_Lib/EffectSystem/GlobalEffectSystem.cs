@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
-using System.Data.SQLite;
+using System.Data;
 using Zeus.Hermes;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.EffectSystem
@@ -28,7 +28,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.EffectSystem
         private GlobalEffectSystem()
         {
             Hermes.getInstance().log(this, "GlobalEffectSystem was instanced.");
-            SQLiteDataReader reader = DB.ExecuteQuery("SELECT MAX(eID) FROM gEffectTable");
+            DataTableReader reader = DB.ExecuteQuery("SELECT MAX(eID) FROM gEffectTable").CreateDataReader();
             reader.Read();
             nextID = Convert.ToInt32(reader["MAX(eID)"]) + 1;
             reader.Close();

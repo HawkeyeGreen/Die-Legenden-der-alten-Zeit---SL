@@ -83,44 +83,77 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
             }
         }
 
+        /// <summary>
+        /// Ein SQLite-konformer Verbindungsstring wird erzeugt.
+        /// </summary>
+        /// <param name="dbName">Der Name der Datenbank, für die ein String erzeugt werden soll.</param>
+        /// <returns>Ein valider SQLiteConnectionString.</returns>
         public static string CreateConnectionString(string dbName)
         {
             return "Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\" + dbName + ".sqlite" + ";Version=3;";
         }
 
+        /// <summary>
+        /// Führt den angegebenen SQLite-Befehl auf der MainDB aus.
+        /// Diese Methode ist für alle Fälle gedacht, deren Command keine Rückgabe erzeugt.
+        /// </summary>
+        /// <param name="cmdString">Der vollständige, formatierte SQLite-Befehlsstring. ACHTUNG: ; nicht vergessen!</param>
         public void ExecuteCommandNonQuery(string cmdString)
         {
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(mainConnectionString);
-            sQLiteConnection.Open();
-            SQLiteCommand command = new SQLiteCommand(cmdString, sQLiteConnection);
-            command.ExecuteNonQuery();
-            sQLiteConnection.Close();
+            try
+            {
+                SQLiteConnection sQLiteConnection = new SQLiteConnection(mainConnectionString);
+                sQLiteConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(cmdString, sQLiteConnection);
+                command.ExecuteNonQuery();
+                sQLiteConnection.Close();
 
-            Hermes.getInstance().log(this, "Following command was executed: " + cmdString);
+                Hermes.getInstance().log(this, "Following command was executed: " + cmdString);
+            }
+            catch(Exception e)
+            {
+                Hermes.getInstance().log(this, "An error occured while executing this command: " + cmdString);
+                Hermes.getInstance().log(this, "The error was: " + e.Message);          
+            }
         }
 
-        public SQLiteDataReader ExecuteQuery(string cmdString)
+        /// <summary>
+        /// Der übergebene SQLite-Befehlsstring wird auf der MainDB ausgeführt und das die Rückgabe der Query wird in einem
+        /// DataSet abgelegt. Diese Methode ist für rückgabe-behaftete Befehle vorgesehen.
+        /// </summary>
+        /// <param name="cmdString">Dieser String ist der Befehel, der ausgeführt werden soll. Muss mit einem ';' geschlossen werden.</param>
+        /// <returns>Dieses DataSet enthält die Rückgabe der DB.</returns>
+        public DataSet ExecuteQuery(string cmdString)
         {
-            Hermes.getInstance().log(this, "Following command will be executed " + cmdString);
+            //Hermes.getInstance().log(this, "Following command will be executed " + cmdString);
 
-            SQLiteConnection sqlite_conn;          // Database Connection Object
-            SQLiteCommand sqlite_cmd;             // Database Command Object
-            SQLiteDataReader sqlite_datareader;  // Data Reader Object
+            try
+            {
+                SQLiteConnection sqlite_conn;          // Database Connection Object
+                SQLiteDataAdapter sqlite_adapter;  // Data Reader Object
 
-            sqlite_conn = new SQLiteConnection(mainConnectionString);
+                sqlite_conn = new SQLiteConnection(mainConnectionString);
 
 
-            sqlite_conn.Open();
+                sqlite_conn.Open();
 
-            sqlite_cmd = sqlite_conn.CreateCommand();
+                sqlite_adapter = new SQLiteDataAdapter(cmdString, sqlite_conn);
 
-            sqlite_cmd.CommandText = cmdString;
+                Hermes.getInstance().log(this, "Following command will be executed: " + cmdString);
 
-            sqlite_datareader = sqlite_cmd.ExecuteReader(CommandBehavior.CloseConnection);
+                DataSet Return = new DataSet();
 
-            Hermes.getInstance().log(this ,"Following command was executed and the DataReader returned: " + cmdString);
+                int rows = sqlite_adapter.Fill(Return);
+                Hermes.getInstance().log(this, "This amount of rows was found: " + rows.ToString());
+                sqlite_conn.Close();
 
-            return sqlite_datareader;
+                return Return;
+            }
+            catch(Exception e)
+            {
+                Hermes.getInstance().log(this, "Following error occured: " + e.Message);
+                return null;
+            }
 
         }
     }
