@@ -39,19 +39,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         }
 
         /// <summary>
-        /// Initialisiert die Liste mit einer Liste von Attributnamen, Attributwerten und Attributlinks.
-        /// </summary>
-        /// <param name="attributes"></param>
-        /// <param name="lockSet"></param>
-        public AttributeSet(List<Tuple<string, int, List<string>>> attributes, bool lockSet = false)
-        {
-            foreach(Tuple<string, int, List<string>> _Attribute in attributes)
-            {
-                ImportStandardAttribute(new StandardAttribute(_Attribute.Item1, _Attribute.Item3), _Attribute.Item2);
-            }
-        }
-
-        /// <summary>
         /// Importiert ein Standardattribut in dieses AttributeSet und intialisiert es mit dem gegebenen Wert.
         /// Sollte das Attribut bereits im Set sein, dann wird sein aktueller Wert mit dem Initialwert überschrieben,
         /// außer wenn das AttributeSet 'gelocked' ist, dann wird 'False' zurückgegeben.

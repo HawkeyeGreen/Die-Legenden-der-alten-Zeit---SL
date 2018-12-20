@@ -14,6 +14,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
     /// </summary>
     public class StandardAttribute : HermesLoggable
     {
+        private string Descr_Path;
         private int _ID;
         private string attributeKey;
         private List<string> linkedKeys;
@@ -37,6 +38,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
             set => linkedKeys = value;
         }
 
+        public string Path
+        {
+            get => Descr_Path;
+            set => Descr_Path = value;
+        }
+
         public long ID => Convert.ToInt64(_ID);
 
         public string Type => "StandardAttribute";
@@ -57,10 +64,11 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         /// </summary>
         /// <param name="key">Der Attributsschlüssel. Beispiele: "ST" für Stärke; "GE" für Geschicklichkeit</param>
         /// <param name="referenced">Die verwiesenen Schlüssel.</param>
-        public StandardAttribute(string key, List<string> referenced)
+        public StandardAttribute(string key, List<string> referenced, string descr)
         {
             attributeKey = key;
             linkedKeys = referenced;
+            Descr_Path = descr;
         }
 
         /// <summary>
@@ -74,6 +82,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
             DataTableReader reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes WHERE ID = " + _ID.ToString() + ";").CreateDataReader();
             reader.Read();
             attributeKey = reader.GetValue(reader.GetOrdinal("AttributeKey")).ToString();
+            Descr_Path = reader.GetValue(reader.GetOrdinal("Path")).ToString();
 
             linkedKeys = new List<string>();
             reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes_References WHERE ID = " + _ID.ToString() + ";").CreateDataReader();
@@ -84,6 +93,18 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
             reader.Close();
 
             Hermes.getInstance().log(this, "The Standardattribute " + attributeKey + " was loaded from the database.");
+        }
+
+        /// <summary>
+        /// Dieser Konstruktor nimmt auch den Pfad zur Beschreibung an.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="path"></param>
+        public StandardAttribute(string key, string path)
+        {
+            Path = path;
+            attributeKey = key;
+            linkedKeys = new List<string>();
         }
 
         /// <summary>
@@ -149,7 +170,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
                 id = _ID;
                 reader.Close();
 
-                DBManager.GetInstance().ExecuteQuery("INSERT INTO StandardAttributes(ID, AttributeKey) VALUES(" + _ID.ToString() + ", '" + attributeKey + "');");
+                DBManager.GetInstance().ExecuteQuery("INSERT INTO StandardAttributes VALUES(" + _ID.ToString() + ", '" + attributeKey + "', '" + Descr_Path + "');");
 
                 foreach(string refKey in linkedKeys)
                 {

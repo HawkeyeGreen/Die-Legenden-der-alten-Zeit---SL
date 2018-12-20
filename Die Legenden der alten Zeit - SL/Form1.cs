@@ -136,6 +136,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 UpdateStandardAttributeReferences(ID);
                 deleteStandardattribute.Enabled = true;
                 standardAttributesRefGroup.Enabled = true;
+                StandardAttributes_Desrc.LoadFile(AppDomain.CurrentDomain.BaseDirectory + attribute.Path, RichTextBoxStreamType.RichText);
             }
         }
 
@@ -209,7 +210,9 @@ namespace Die_Legenden_der_alten_Zeit___SL
             }
             else
             {
-                StandardAttribute attribute = new StandardAttribute(Key);
+                string path = "/Content/Docs/Description/Attributes/" + Key + ".rtf";
+                StandardAttributes_Desrc.SaveFile(AppDomain.CurrentDomain.BaseDirectory + path, RichTextBoxStreamType.RichText);
+                StandardAttribute attribute = new StandardAttribute(Key, path);
                 attribute.SaveStandardAttribute();
                 UpdateStandardAttributesTab();
             }
@@ -295,6 +298,11 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 NewsTab_Text.SaveFile(AppDomain.CurrentDomain.BaseDirectory + path, RichTextBoxStreamType.RichText);
             }
             UpdateNewsTab();
+        }
+
+        private void saveChanges_Standardattributes_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
