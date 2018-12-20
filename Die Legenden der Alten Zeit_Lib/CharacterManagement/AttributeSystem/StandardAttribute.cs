@@ -126,7 +126,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem
         /// </summary>
         public void ResetLookIndex() => currentLookIndex = 0;
 
-
         /// <summary>
         /// Sichert dieses Standardattribut in die Standardattributtabellen der MainDB.
         /// </summary>

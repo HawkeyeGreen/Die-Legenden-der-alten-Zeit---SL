@@ -16,18 +16,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.PlayerManagement
         {
             List<string> playerNames = new List<string>();
 
-            SQLiteConnection sQLiteConnection = new SQLiteConnection(DBManager.GetInstance().MainConnectionString);
-            sQLiteConnection.Open();
-            SQLiteCommand command = new SQLiteCommand("SELECT PlayerName FROM Players", sQLiteConnection);
-            SQLiteDataReader reader = command.ExecuteReader();
+            DataTableReader reader = DBManager.GetInstance().ExecuteQuery("SELECT PlayerName FROM Players;").CreateDataReader();
 
             while (reader.Read())
             {
-                playerNames.Add(reader["PlayerName"] as string);
+                playerNames.Add(reader.GetValue(reader.GetOrdinal("PlayerName")).ToString());
             }
 
             reader.Close();
-            sQLiteConnection.Close();
 
             return playerNames;
         }

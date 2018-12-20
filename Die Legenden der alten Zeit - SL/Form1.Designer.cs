@@ -51,12 +51,29 @@
             this.createStandardattribute = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.listBoxStandardAttributes = new System.Windows.Forms.ListBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.NewsTab = new System.Windows.Forms.TabPage();
+            this.NewsTab_NewsList = new System.Windows.Forms.ListBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.NewsTab_Text = new System.Windows.Forms.RichTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.NewsTab_NewsName = new System.Windows.Forms.TextBox();
+            this.NewsTab_Theme = new System.Windows.Forms.ComboBox();
+            this.NewsTab_Location = new System.Windows.Forms.ComboBox();
+            this.NewsTab_NewNews = new System.Windows.Forms.Button();
+            this.NewsTab_SaveNews = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.MainTabControl.SuspendLayout();
             this.standardAttributes.SuspendLayout();
             this.standardAttributes_AddRef.SuspendLayout();
             this.standardAttributesRefGroup.SuspendLayout();
+            this.NewsTab.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -87,7 +104,7 @@
             // MainTabControl
             // 
             this.MainTabControl.Controls.Add(this.standardAttributes);
-            this.MainTabControl.Controls.Add(this.tabPage2);
+            this.MainTabControl.Controls.Add(this.NewsTab);
             this.MainTabControl.Location = new System.Drawing.Point(17, 35);
             this.MainTabControl.Name = "MainTabControl";
             this.MainTabControl.SelectedIndex = 0;
@@ -106,6 +123,7 @@
             this.standardAttributes.Size = new System.Drawing.Size(1867, 924);
             this.standardAttributes.TabIndex = 0;
             this.standardAttributes.Text = "Standardattribute";
+            this.standardAttributes.ToolTipText = "Verwaltung der Standardattribute";
             this.standardAttributes.UseVisualStyleBackColor = true;
             // 
             // deleteStandardattribute
@@ -277,15 +295,143 @@
             this.listBoxStandardAttributes.TabIndex = 0;
             this.listBoxStandardAttributes.SelectedIndexChanged += new System.EventHandler(this.listBoxStandardAttributes_SelectedIndexChanged);
             // 
-            // tabPage2
+            // NewsTab
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1867, 924);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.NewsTab.Controls.Add(this.NewsTab_NewNews);
+            this.NewsTab.Controls.Add(this.groupBox3);
+            this.NewsTab.Controls.Add(this.groupBox2);
+            this.NewsTab.Controls.Add(this.groupBox1);
+            this.NewsTab.Controls.Add(this.NewsTab_NewsList);
+            this.NewsTab.Location = new System.Drawing.Point(4, 22);
+            this.NewsTab.Name = "NewsTab";
+            this.NewsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.NewsTab.Size = new System.Drawing.Size(1867, 924);
+            this.NewsTab.TabIndex = 1;
+            this.NewsTab.Text = "News";
+            this.NewsTab.ToolTipText = "Verwaltung der Benachrichtigungen";
+            this.NewsTab.UseVisualStyleBackColor = true;
+            // 
+            // NewsTab_NewsList
+            // 
+            this.NewsTab_NewsList.FormattingEnabled = true;
+            this.NewsTab_NewsList.Location = new System.Drawing.Point(7, 45);
+            this.NewsTab_NewsList.Name = "NewsTab_NewsList";
+            this.NewsTab_NewsList.Size = new System.Drawing.Size(120, 862);
+            this.NewsTab_NewsList.TabIndex = 0;
+            this.NewsTab_NewsList.SelectedIndexChanged += new System.EventHandler(this.NewsTab_NewsList_SelectedIndexChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.NewsTab_Location);
+            this.groupBox1.Controls.Add(this.NewsTab_Theme);
+            this.groupBox1.Controls.Add(this.NewsTab_NewsName);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Location = new System.Drawing.Point(185, 45);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(817, 109);
+            this.groupBox1.TabIndex = 1;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Überblick";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.NewsTab_Text);
+            this.groupBox2.Location = new System.Drawing.Point(185, 152);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(817, 343);
+            this.groupBox2.TabIndex = 2;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Meldung";
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.NewsTab_SaveNews);
+            this.groupBox3.Location = new System.Drawing.Point(185, 490);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(817, 100);
+            this.groupBox3.TabIndex = 3;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Bearbeitung";
+            // 
+            // NewsTab_Text
+            // 
+            this.NewsTab_Text.Location = new System.Drawing.Point(7, 20);
+            this.NewsTab_Text.Name = "NewsTab_Text";
+            this.NewsTab_Text.Size = new System.Drawing.Size(804, 312);
+            this.NewsTab_Text.TabIndex = 0;
+            this.NewsTab_Text.Text = "";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(9, 20);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Name: ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(7, 48);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(43, 13);
+            this.label6.TabIndex = 1;
+            this.label6.Text = "Thema:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 75);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(66, 13);
+            this.label7.TabIndex = 2;
+            this.label7.Text = "Schauplatz: ";
+            // 
+            // NewsTab_NewsName
+            // 
+            this.NewsTab_NewsName.Location = new System.Drawing.Point(79, 17);
+            this.NewsTab_NewsName.Name = "NewsTab_NewsName";
+            this.NewsTab_NewsName.Size = new System.Drawing.Size(177, 20);
+            this.NewsTab_NewsName.TabIndex = 3;
+            // 
+            // NewsTab_Theme
+            // 
+            this.NewsTab_Theme.FormattingEnabled = true;
+            this.NewsTab_Theme.Location = new System.Drawing.Point(79, 45);
+            this.NewsTab_Theme.Name = "NewsTab_Theme";
+            this.NewsTab_Theme.Size = new System.Drawing.Size(177, 21);
+            this.NewsTab_Theme.TabIndex = 4;
+            // 
+            // NewsTab_Location
+            // 
+            this.NewsTab_Location.FormattingEnabled = true;
+            this.NewsTab_Location.Location = new System.Drawing.Point(79, 72);
+            this.NewsTab_Location.Name = "NewsTab_Location";
+            this.NewsTab_Location.Size = new System.Drawing.Size(177, 21);
+            this.NewsTab_Location.TabIndex = 5;
+            // 
+            // NewsTab_NewNews
+            // 
+            this.NewsTab_NewNews.Location = new System.Drawing.Point(185, 16);
+            this.NewsTab_NewNews.Name = "NewsTab_NewNews";
+            this.NewsTab_NewNews.Size = new System.Drawing.Size(134, 23);
+            this.NewsTab_NewNews.TabIndex = 4;
+            this.NewsTab_NewNews.Text = "Neue Meldung";
+            this.NewsTab_NewNews.UseVisualStyleBackColor = true;
+            this.NewsTab_NewNews.Click += new System.EventHandler(this.NewsTab_NewNews_Click);
+            // 
+            // NewsTab_SaveNews
+            // 
+            this.NewsTab_SaveNews.Location = new System.Drawing.Point(7, 19);
+            this.NewsTab_SaveNews.Name = "NewsTab_SaveNews";
+            this.NewsTab_SaveNews.Size = new System.Drawing.Size(804, 57);
+            this.NewsTab_SaveNews.TabIndex = 0;
+            this.NewsTab_SaveNews.Text = "SPEICHERN!";
+            this.NewsTab_SaveNews.UseVisualStyleBackColor = true;
+            this.NewsTab_SaveNews.Click += new System.EventHandler(this.NewsTab_SaveNews_Click);
             // 
             // Form1
             // 
@@ -310,6 +456,11 @@
             this.standardAttributes_AddRef.PerformLayout();
             this.standardAttributesRefGroup.ResumeLayout(false);
             this.standardAttributesRefGroup.PerformLayout();
+            this.NewsTab.ResumeLayout(false);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,7 +473,7 @@
         private System.Windows.Forms.ToolStripMenuItem beendenToolStripMenuItem;
         private System.Windows.Forms.TabControl MainTabControl;
         private System.Windows.Forms.TabPage standardAttributes;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage NewsTab;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox listBoxStandardAttributes;
         private System.Windows.Forms.GroupBox standardAttributes_AddRef;
@@ -340,6 +491,19 @@
         private System.Windows.Forms.TextBox standardAttributesReferencedKey;
         private System.Windows.Forms.ListBox standardAttributeLinkingSpace_List;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox NewsTab_NewsList;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.RichTextBox NewsTab_Text;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TextBox NewsTab_NewsName;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox NewsTab_Location;
+        private System.Windows.Forms.ComboBox NewsTab_Theme;
+        private System.Windows.Forms.Button NewsTab_NewNews;
+        private System.Windows.Forms.Button NewsTab_SaveNews;
     }
 }
 

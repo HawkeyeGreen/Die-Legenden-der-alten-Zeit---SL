@@ -62,8 +62,13 @@
     <Compile Include="CharacterManagement\AttributeSystem\AttributeSet.cs" />
     <Compile Include="CharacterManagement\AttributeSystem\StandardAttribute.cs" />
     <Compile Include="DB_Management\DBManager.cs" />
-    <Compile Include="EffectSystem\AbstractEffectManager.cs" />
-    <Compile Include="EffectSystem\GlobalEffectSystem.cs" />
+    <Compile Include="EffectSystem\Class1.cs" />
+    <Compile Include="EffectSystem\Effects\Effect.cs" />
+    <Compile Include="EffectSystem\Effects\EffectNugget.cs" />
+    <Compile Include="Nations\NationManagement.cs" />
+    <Compile Include="Nations\StorageMeans\Storage.cs" />
+    <Compile Include="Nations\StorageMeans\StorageRequest.cs" />
+    <Compile Include="PlayerManagement\NewsSystem\News.cs" />
     <Compile Include="PlayerManagement\PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="World\Map\Map.cs" />

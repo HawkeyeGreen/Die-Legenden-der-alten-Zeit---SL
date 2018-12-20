@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Die_Legenden_der_Alten_Zeit_Lib.EffectSystem
+{
+    /// <summary>
+    /// Diese Klasse ist die Wurzel des potentiellen Vererbungsbaumes der
+    /// </summary>
+    class BasicEffectManager
+    {
+        
+    }
+}

@@ -12,6 +12,7 @@ using System.Data.SQLite;
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem;
 using Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem;
+using Die_Legenden_der_Alten_Zeit_Lib.PlayerManagement.NewsSystem;
 
 using Zeus.Hermes;
 
@@ -36,13 +37,17 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void UpdateAllFormData()
         {
             UpdateStandardAttributesTab();
+            UpdateNewsTab();
         }
 
+        /// <summary>
+        /// Diese Methode kümmert sich um das Updaten des SL-Tabs für die Attribute.
+        /// </summary>
         private void UpdateStandardAttributesTab()
         {
             DataTableReader tableReader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes").CreateDataReader();
 
-            if(tableReader.HasRows)
+            if (tableReader.HasRows)
             {
                 int selectedIndex = listBoxStandardAttributes.SelectedIndex;
 
@@ -52,10 +57,10 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
                 while (tableReader.Read())
                 {
-                    listBoxStandardAttributes.Items.Add(tableReader.GetString(tableReader.GetOrdinal("AttributeKey")) + " {" + tableReader.GetValue(tableReader.GetOrdinal("ID")).ToString() + "}" );
+                    listBoxStandardAttributes.Items.Add(tableReader.GetString(tableReader.GetOrdinal("AttributeKey")) + " {" + tableReader.GetValue(tableReader.GetOrdinal("ID")).ToString() + "}");
                 }
 
-                if(selectedIndex < listBoxStandardAttributes.Items.Count)
+                if (selectedIndex < listBoxStandardAttributes.Items.Count)
                 {
                     listBoxStandardAttributes.SelectedIndex = selectedIndex;
                     standardAttributesRefGroup.Enabled = true;
@@ -73,9 +78,39 @@ namespace Die_Legenden_der_alten_Zeit___SL
             standardAttributeID.Text = "";
             standardAttributeWorkingSpace_Name.Text = "";
         }
-        #endregion
 
-        #region loadElements
+        /// <summary>
+        /// Diese Methode verwaltet das Updaten des News-Tab.
+        /// </summary>
+        private void UpdateNewsTab()
+        {
+            List<News> allNews = News.GetAllMainDBNews();
+            int index = NewsTab_NewsList.SelectedIndex;
+            NewsTab_NewsList.ClearSelected();
+            NewsTab_NewsList.Items.Clear();
+            foreach (News news in allNews)
+            {
+                NewsTab_NewsList.Items.Add(news.Name + " {" + news.ID.ToString() + "}");
+            }
+            if (index < NewsTab_NewsList.Items.Count)
+            {
+                NewsTab_NewsList.SelectedIndex = index;
+            }
+
+            List<string> topics = News.GetAllCurrentTopics();
+            NewsTab_Theme.Items.Clear();
+            foreach (string topic in topics)
+            {
+                NewsTab_Theme.Items.Add(topic);
+            }
+
+            List<string> places = News.GetAllCurrentPlaceTags();
+            NewsTab_Location.Items.Clear();
+            foreach (string place in places)
+            {
+                NewsTab_Location.Items.Add(place);
+            }
+        }
         #endregion
 
 
@@ -91,7 +126,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private void listBoxStandardAttributes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(listBoxStandardAttributes.SelectedItem != null)
+            if (listBoxStandardAttributes.SelectedItem != null)
             {
                 int ID = GetIDFromStandardstring(listBoxStandardAttributes.SelectedItem.ToString());
 
@@ -146,7 +181,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private void standardAttributes_WorkingSpace_ButtonToggle()
         {
-            if(askOnce_Standardattributes.Enabled)
+            if (askOnce_Standardattributes.Enabled)
             {
                 createStandardattribute.Enabled = true;
                 saveChanges_Standardattributes.Enabled = true;
@@ -168,7 +203,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
             DataTableReader reader = DBManager.GetInstance().ExecuteQuery("SELECT * FROM StandardAttributes WHERE AttributeKey ='" + Key + "';").CreateDataReader();
 
-            if(reader.HasRows)
+            if (reader.HasRows)
             {
                 MessageBox.Show("Key ist bereits vorhanden! Anderen AttributeKey vergeben.", "My Application", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
             }
@@ -184,7 +219,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private void deleteStandardattribute_Click(object sender, EventArgs e)
         {
-            if(listBoxStandardAttributes.SelectedItem != null)
+            if (listBoxStandardAttributes.SelectedItem != null)
             {
                 int ID = GetIDFromStandardstring(listBoxStandardAttributes.SelectedItem.ToString());
                 DBManager.GetInstance().ExecuteCommandNonQuery("DELETE FROM StandardAttributes WHERE ID=" + ID.ToString() + ";");
@@ -204,7 +239,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
             StandardAttribute attribute = GetSelectedStandardAttribute();
             string refKey = standardAttributesReferencedKey.Text;
 
-            if(attribute != null)
+            if (attribute != null)
             {
                 DBManager.GetInstance().ExecuteQuery("INSERT OR REPLACE INTO StandardAttributes_References VALUES(" + attribute.ID.ToString() + ",'" + refKey + "')");
                 standardAttributesReferencedKey.Text = "";
@@ -219,7 +254,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private StandardAttribute GetSelectedStandardAttribute()
         {
-            if(listBoxStandardAttributes.SelectedItem != null)
+            if (listBoxStandardAttributes.SelectedItem != null)
             {
                 return new StandardAttribute(GetIDFromStandardstring(listBoxStandardAttributes.SelectedItem.ToString()));
             }
@@ -228,6 +263,38 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 return null;
             }
 
+        }
+
+        private void NewsTab_NewsList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (NewsTab_NewsList.SelectedItem != null)
+            {
+                News news = new News(GetIDFromStandardstring(Convert.ToString(NewsTab_NewsList.SelectedItem)));
+                NewsTab_NewsName.Text = news.Name;
+                NewsTab_Location.Text = news.PlaceTag;
+                NewsTab_Theme.Text = news.Topic;
+                NewsTab_Text.LoadFile(AppDomain.CurrentDomain.BaseDirectory + news.RTFPath, RichTextBoxStreamType.RichText);
+            }
+        }
+
+        private void NewsTab_NewNews_Click(object sender, EventArgs e)
+        {
+            NewsTab_NewsList.ClearSelected();
+            NewsTab_NewsName.Text = "";
+            NewsTab_Location.Text = "";
+            NewsTab_Theme.Text = "";
+            NewsTab_Text.Clear();
+        }
+
+        private void NewsTab_SaveNews_Click(object sender, EventArgs e)
+        {
+            if (NewsTab_NewsList.SelectedItem == null)
+            {
+                string path = "/Content/Docs/News/" + NewsTab_NewsName.Text + ".rtf";
+                News tmp = new News(NewsTab_NewsName.Text, NewsTab_Theme.Text, path, NewsTab_Location.Text);
+                NewsTab_Text.SaveFile(AppDomain.CurrentDomain.BaseDirectory + path, RichTextBoxStreamType.RichText);
+            }
+            UpdateNewsTab();
         }
     }
 }
