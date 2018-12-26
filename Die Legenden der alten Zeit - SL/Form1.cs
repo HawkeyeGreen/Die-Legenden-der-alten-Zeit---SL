@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using System.Data.SQLite;
 
 using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
-using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem;
+using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem.ConditionTracking;
 using Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem;
 using Die_Legenden_der_Alten_Zeit_Lib.PlayerManagement.NewsSystem;
 
