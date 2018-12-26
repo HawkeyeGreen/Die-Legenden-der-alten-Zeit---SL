@@ -237,6 +237,46 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                 Hermes.getInstance().log(this, "Following error occured while trying to create the database and it's entry: " + e.Message);
             }
         }
+
+        /// <summary>
+        /// Nimmt einen string aus einer DB entgegen, welcher einen bool-Wert repräsentiert.
+        /// </summary>
+        /// <param name="input">Der Eintrag aus der DB.</param>
+        /// <returns>true, wenn der Eintrag "true" entspricht, ansonsten false.</returns>
+        public static bool ConvertToBoolean(string input)
+        {
+            if(input == "true")
+            {
+                return true;
+            }
+            else if(input == "false")
+            {
+                return false;
+            }
+            else
+            {
+                Hermes.getInstance().log(DBManager.GetInstance(), input + " matched neither true nor false.");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Erzeugt einen DBManager-konformen string aus einem gegebenen boolean-Wert.
+        /// Dient zur Kontrolle über den Wert, welcher in die DB eingetragen wird.
+        /// </summary>
+        /// <param name="input">Der boolean-Wert, dessen Entsprechung angefordert wird.</param>
+        /// <returns>Ein string, der dem boolean-Wert des inputs entspricht.</returns>
+        public static string ConvertBooleanToString(bool input)
+        {
+            if(input)
+            {
+                return "true";
+            }
+            else
+            {
+                return "false";
+            }
+        }
     }
 
 }
