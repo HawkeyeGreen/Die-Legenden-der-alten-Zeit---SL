@@ -18,6 +18,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Die Legenden der alten Zeit
 EndProject
 Project("{262852C6-CD72-467D-83FE-5EEB1973A190}") = "Die Legenden der Alten Zeit - Android Client", "Die Legenden der Alten Zeit - Android Client\Die Legenden der Alten Zeit - Android Client.jsproj", "{1AA760F6-076D-479B-A25C-734C54B216E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Die Legenden der Alten Zeit - MapLib", "Die Legenden der Alten Zeit - MapLib\Die Legenden der Alten Zeit - MapLib.csproj", "{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Die Legenden der Alten Zeit - Mapeditor", "Die Legenden der Alten Zeit - Mapeditor\Die Legenden der Alten Zeit - Mapeditor.csproj", "{B48CC713-DB2A-4FB8-854F-FD300E76AC47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Android = Debug|Android
@@ -198,6 +202,50 @@ Global
 		{1AA760F6-076D-479B-A25C-734C54B216E9}.Release|Windows-x86.Build.0 = Release|Windows-x86
 		{1AA760F6-076D-479B-A25C-734C54B216E9}.Release|Windows-x86.Deploy.0 = Release|Windows-x86
 		{1AA760F6-076D-479B-A25C-734C54B216E9}.Release|x86.ActiveCfg = Release|Windows-x86
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Android.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Android.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|iOS.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|iOS.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-ARM.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-ARM.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-x64.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-x64.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-x86.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|Windows-x86.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Debug|x86.Build.0 = Debug|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Android.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Android.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|iOS.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|iOS.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-ARM.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-ARM.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-x64.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-x64.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-x86.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|Windows-x86.Build.0 = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|x86.ActiveCfg = Release|Any CPU
+		{9CE5E0E8-3D9E-4B6B-A3D1-C1B2C842A458}.Release|x86.Build.0 = Release|Any CPU
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|Android.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|iOS.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|Windows-ARM.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|Windows-x64.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|Windows-x86.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|x86.ActiveCfg = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Debug|x86.Build.0 = Debug|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|Android.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|Any CPU.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|iOS.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|Windows-ARM.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|Windows-x64.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|Windows-x86.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|x86.ActiveCfg = Release|x86
+		{B48CC713-DB2A-4FB8-854F-FD300E76AC47}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
