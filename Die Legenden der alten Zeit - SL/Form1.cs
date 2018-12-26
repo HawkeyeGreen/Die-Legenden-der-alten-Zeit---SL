@@ -29,6 +29,8 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateAllFormData();
+
+            DBManager.GetInstance().CreateDatabase("TEST");
         }
 
         #region UpdateFuntions

@@ -19,6 +19,9 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
     {
         private static DBManager instance;
 
+        private Dictionary<string, string> nonMainDatabase = new Dictionary<string, string>();
+        private Dictionary<string, Tuple<bool, string>> nonMainKeys = new Dictionary<string, Tuple<bool, string>>();
+
         private string mainDBPath;
         private string mainConnectionString;
 
@@ -37,8 +40,8 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         private DBManager()
         {
             mainDBPath = AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\mainDB.sqlite";
-            
-            if(!File.Exists(mainDBPath))
+
+            if (!File.Exists(mainDBPath))
             {
                 SQLiteConnection.CreateFile(mainDBPath);
             }
@@ -50,7 +53,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 
         public static DBManager GetInstance()
         {
-            if(instance == null)
+            if (instance == null)
             {
                 instance = new DBManager();
             }
@@ -63,23 +66,46 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// </summary>
         /// <param name="myKey">Ein ThreadKey für die Database. Default=Main</param>
         /// <returns>Wenn die Rückgabe true ist, so ist für diesen Thread der Zugriff gerade möglich.</returns>
-        public bool DatabaseAccesible(string myKey = "Main")
+        public bool DatabaseAccessible(string myKey = "Main", string dbKey = "mainDB")
         {
-            if(!locked)
+
+            if(dbKey == "mainDB")
             {
-                // DB offen
-                return true;
+                if (!locked)
+                {
+                    // DB offen
+                    return true;
+                }
+                else
+                {
+                    if (threadKey == myKey)
+                    {
+                        // Key öffnet Zugang
+                        return true;
+                    }
+                    //Falscher Key
+                    return false;
+                }
             }
             else
             {
-                if(threadKey == myKey)
+                if(nonMainKeys[dbKey].Item1)
                 {
-                    // Key öffnet Zugang
+                    // DB ist frei
                     return true;
                 }
-                //Falscher Key
-                return false;
+                else
+                {
+                    if(nonMainKeys[dbKey].Item2 == myKey)
+                    {
+                        // Key ist richtig
+                        return true;
+                    }
+                    // Key ist nicht der passende
+                    return false;
+                }
             }
+
         }
 
         /// <summary>
@@ -87,9 +113,9 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// </summary>
         /// <param name="dbName">Der Name der Datenbank, für die ein String erzeugt werden soll.</param>
         /// <returns>Ein valider SQLiteConnectionString.</returns>
-        public static string CreateConnectionString(string dbName)
+        public static string CreateConnectionString(string dbName, string Location = "\\Databases\\")
         {
-            return "Data Source=" + AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\" + dbName + ".sqlite" + ";Version=3;";
+            return "Data Source=" + AppDomain.CurrentDomain.BaseDirectory + Location + dbName + ".sqlite" + ";Version=3;";
         }
 
         /// <summary>
@@ -97,22 +123,31 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// Diese Methode ist für alle Fälle gedacht, deren Command keine Rückgabe erzeugt.
         /// </summary>
         /// <param name="cmdString">Der vollständige, formatierte SQLite-Befehlsstring. ACHTUNG: ; nicht vergessen!</param>
-        public void ExecuteCommandNonQuery(string cmdString)
+        public void ExecuteCommandNonQuery(string cmdString, string dbKey = "mainDB")
         {
             try
             {
-                SQLiteConnection sQLiteConnection = new SQLiteConnection(mainConnectionString);
+                SQLiteConnection sQLiteConnection;
+                if (dbKey == "mainDB")
+                {
+                    sQLiteConnection = new SQLiteConnection(mainConnectionString);
+                }
+                else
+                {
+                    sQLiteConnection = new SQLiteConnection(nonMainDatabase[dbKey]);
+                }
                 sQLiteConnection.Open();
                 SQLiteCommand command = new SQLiteCommand(cmdString, sQLiteConnection);
                 command.ExecuteNonQuery();
                 sQLiteConnection.Close();
 
+
                 Hermes.getInstance().log(this, "Following command was executed: " + cmdString);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Hermes.getInstance().log(this, "An error occured while executing this command: " + cmdString);
-                Hermes.getInstance().log(this, "The error was: " + e.Message);          
+                Hermes.getInstance().log(this, "An error occured while executing this command: " + cmdString + " on the following database " + dbKey);
+                Hermes.getInstance().log(this, "The error was: " + e.Message);
             }
         }
 
@@ -122,7 +157,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// </summary>
         /// <param name="cmdString">Dieser String ist der Befehel, der ausgeführt werden soll. Muss mit einem ';' geschlossen werden.</param>
         /// <returns>Dieses DataSet enthält die Rückgabe der DB.</returns>
-        public DataSet ExecuteQuery(string cmdString)
+        public DataSet ExecuteQuery(string cmdString, string dbKey = "mainDB")
         {
             //Hermes.getInstance().log(this, "Following command will be executed " + cmdString);
 
@@ -131,7 +166,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                 SQLiteConnection sqlite_conn;          // Database Connection Object
                 SQLiteDataAdapter sqlite_adapter;  // Data Reader Object
 
-                sqlite_conn = new SQLiteConnection(mainConnectionString);
+                if (dbKey == "mainDB")
+                {
+                    sqlite_conn = new SQLiteConnection(mainConnectionString);
+                }
+                else
+                {
+                    sqlite_conn = new SQLiteConnection(nonMainDatabase[dbKey]);
+                }
 
 
                 sqlite_conn.Open();
@@ -148,12 +190,52 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 
                 return Return;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                Hermes.getInstance().log(this, "Following error occured: " + e.Message);
+                Hermes.getInstance().log(this, "Following error occured: " + e.Message + " on the following database " + dbKey);
                 return null;
             }
 
+        }
+
+        /// <summary>
+        /// Diese Methode erstellt ein DB-File, wenn es noch nicht existiert.
+        /// Und vermerkt es unter seinem Key in der Liste, so dass man sie ab dann leicht abrufen kann.
+        /// </summary>
+        /// <param name="dbKey">Der Schlüssel (und Name) der Datenbank</param>
+        /// <param name="location">Der Speicherort der Datenbank.</param>
+        public void CreateDatabase(string dbKey, bool force = false, string location = "\\Databases\\")
+        {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + location + dbKey + ".sqlite";
+
+            Hermes.getInstance().log(this, "Trying to create this database: " + FileName);
+
+            try
+            {
+                if (!nonMainDatabase.ContainsKey(dbKey))
+                {
+                    if (!File.Exists(FileName))
+                    {
+                        Hermes.getInstance().log(this, "File will be created!");
+                        SQLiteConnection.CreateFile(FileName);
+                    }
+                    else if(force)
+                    {
+                        Hermes.getInstance().log(this, "File will be created!");
+                        SQLiteConnection.CreateFile(FileName);
+                    }
+                    else
+                    {
+                        Hermes.getInstance().log(this, "DB already existed!");
+                    }
+                    Hermes.getInstance().log(this, "Key will be inserted!");
+                    nonMainDatabase[dbKey] = CreateConnectionString(dbKey, location);
+                }
+            }
+            catch(Exception e)
+            {
+                Hermes.getInstance().log(this, "Following error occured while trying to create the database and it's entry: " + e.Message);
+            }
         }
     }
 
