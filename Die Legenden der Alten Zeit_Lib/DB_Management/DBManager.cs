@@ -37,20 +37,26 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 
         string HermesLoggable.Type => "DBManager";
 
+        // Die MainDB wird nicht spezifisch neu erzeugt vom Programm
+        // Das hätte auch keinen Wert, denn der DBManager KANN nicht wissen,
+        // was alles an Informationen in der DB benötigt werden
+
+        /// <summary>
+        /// Initialisiert den DBManager auf der MainDB.
+        /// </summary>
         private DBManager()
         {
             mainDBPath = AppDomain.CurrentDomain.BaseDirectory + "\\Databases\\mainDB.sqlite";
-
-            if (!File.Exists(mainDBPath))
-            {
-                SQLiteConnection.CreateFile(mainDBPath);
-            }
 
             mainConnectionString = CreateConnectionString("mainDB");
 
             Hermes.getInstance().log(this, "DBManager was instanced.");
         }
 
+        /// <summary>
+        /// Ruft die aktuelle Instanz des DBManagers ab oder veranlasst die Erstellung einer verwendbaren DBManager-Instanz.
+        /// </summary>
+        /// <returns>Initialisierte DBManager-Instanz</returns>
         public static DBManager GetInstance()
         {
             if (instance == null)
@@ -69,7 +75,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         public bool DatabaseAccessible(string myKey = "Main", string dbKey = "mainDB")
         {
 
-            if(dbKey == "mainDB")
+            if (dbKey == "mainDB")
             {
                 if (!locked)
                 {
@@ -89,14 +95,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
             }
             else
             {
-                if(nonMainKeys[dbKey].Item1)
+                if (nonMainKeys[dbKey].Item1)
                 {
                     // DB ist frei
                     return true;
                 }
                 else
                 {
-                    if(nonMainKeys[dbKey].Item2 == myKey)
+                    if (nonMainKeys[dbKey].Item2 == myKey)
                     {
                         // Key ist richtig
                         return true;
@@ -219,7 +225,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                         Hermes.getInstance().log(this, "File will be created!");
                         SQLiteConnection.CreateFile(FileName);
                     }
-                    else if(force)
+                    else if (force)
                     {
                         Hermes.getInstance().log(this, "File will be created!");
                         SQLiteConnection.CreateFile(FileName);
@@ -232,7 +238,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                     nonMainDatabase[dbKey] = CreateConnectionString(dbKey, location);
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Hermes.getInstance().log(this, "Following error occured while trying to create the database and it's entry: " + e.Message);
             }
@@ -245,11 +251,11 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// <returns>true, wenn der Eintrag "true" entspricht, ansonsten false.</returns>
         public static bool ConvertToBoolean(string input)
         {
-            if(input == "true")
+            if (input == "true")
             {
                 return true;
             }
-            else if(input == "false")
+            else if (input == "false")
             {
                 return false;
             }
@@ -268,7 +274,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
         /// <returns>Ein string, der dem boolean-Wert des inputs entspricht.</returns>
         public static string ConvertBooleanToString(bool input)
         {
-            if(input)
+            if (input)
             {
                 return "true";
             }
