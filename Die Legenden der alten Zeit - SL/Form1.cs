@@ -13,6 +13,7 @@ using Die_Legenden_der_Alten_Zeit_Lib.DB_Management;
 using Die_Legenden_der_Alten_Zeit_Lib.EffectSystem.ConditionTracking;
 using Die_Legenden_der_Alten_Zeit_Lib.CharacterManagement.AttributeSystem;
 using Die_Legenden_der_Alten_Zeit_Lib.PlayerManagement.NewsSystem;
+using Die_Legenden_der_Alten_Zeit_Lib.World.Ressources;
 
 using Zeus.Hermes;
 
@@ -29,6 +30,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateAllFormData();
+            Ressource test = new Ressource(0);
 
             DBManager.GetInstance().CreateDatabase("TEST");
         }

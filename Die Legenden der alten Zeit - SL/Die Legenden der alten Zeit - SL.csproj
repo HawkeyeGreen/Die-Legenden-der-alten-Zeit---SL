@@ -93,8 +93,8 @@
     <None Include="Content\Docs\News\Dummy.rtf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Databases\mainDB.sqlite">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <None Include="Content\Docs\Description\Ressources\Dummy.rtf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -114,6 +114,9 @@
     <Folder Include="Sources\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\IMG\Verklingen.gif">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Databases\Database Ordner.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
