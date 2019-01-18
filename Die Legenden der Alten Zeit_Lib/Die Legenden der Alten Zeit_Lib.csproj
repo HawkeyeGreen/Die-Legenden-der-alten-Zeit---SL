@@ -79,6 +79,7 @@
     <Compile Include="EffectSystem\Effects\Nuggets\EffectNugget.cs" />
     <Compile Include="EffectSystem\Effects\Nuggets\EffectNuggetSet.cs" />
     <Compile Include="EffectSystem\IEffectable.cs" />
+    <Compile Include="Nations\Ethics.cs" />
     <Compile Include="Nations\NationManagement.cs" />
     <Compile Include="Nations\StorageMeans\Storage.cs" />
     <Compile Include="Nations\StorageMeans\StorageRequest.cs" />

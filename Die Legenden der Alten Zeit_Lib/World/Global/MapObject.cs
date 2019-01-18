@@ -19,6 +19,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.World.Global
         private string represented_Type;
         private int represented_ID;
         
+        private int mapID;
         private int own_ID;
         private Vector2 position;
 
