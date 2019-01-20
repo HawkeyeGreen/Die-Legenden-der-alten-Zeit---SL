@@ -13,6 +13,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
     public class Ethics
     {
         private const string Neutral = "neutral";
+
         private int xenophilia = 0; // Standard: Neutral; -3 radikal Isolationist und +3 radikal Xenophil
         #region xenophilia strings
         private const string XenophiliaInterested = "Xenophilie zugeneigt";
@@ -23,6 +24,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         private const string Isolationist = "Isolationist";
         private const string RadicalIsolationist = "Radikaler Isolationist";
         #endregion
+
         private int militarist = 0; // Standard: Neutral; -3 radikal Pazifist und +3 radikal Militarist
         #region militarist strings
         private const string MilitaristInterested = "Militarismus zugeneigt";
@@ -33,6 +35,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         private const string Pacifist = "Pazifist";
         private const string RadicalPacifist = "Radikaler Pazifist";
         #endregion
+
         private int egalitarian = 0; // Standard: Neutral; -3 radikal Autoritär und +3 radikal Demokrat
         #region egalitarian strings
         private const string EgalitarismInterested = "Egalitarianismus zugeneigt";
@@ -43,7 +46,21 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         private const string Authorian = "Autokrat";
         private const string RadicalAuthorian = "Radikaler Autokrat";
         #endregion
-        private int side = 4; // Standard: Neutral; -3 Licht, +3 Dunkelheit und 0 Gleichgewicht
+
+        private Vector2 side = new Vector2(0, 0); // Standard: X-Achse Gleichgewicht; Y-Achse Licht vs. Dunkelheit 0,0 Neutral
+        #region side strings
+        private const string LightInterested = "Dem Lichte zugeneigt";
+        private const string Lightner = "Dem Lichte zugehörig";
+
+        private const string DarkInterested = "Der Dunkelheit zugeneigt";
+        private const string Darkner = "Der Dunkelheit zugehörig";
+
+        private const string Balance = "Dem Gleichgewicht zugehörig";
+        private const string BalanceInterested = "Dem Gleichgewicht zugeneigt";
+        private const string BalanceAndDark = "Steht zwischen Dunkelheit und Gleichgewicht";
+        private const string BalanceAndLight = "Steht zwischen Dunkelheit und Licht";
+        #endregion
+
         private int collectivist = 0; // Standard: Neutral; -3 radikal Individualist und +3 radikal Kollektivist
         private int ecologist = 0; // Standard: Neutral; -3 radikal Ökonome und +3 radikal Ökologe
         private Vector3 knowledgeWay = new Vector3(0, 0, 0); // Standard: Neutral; (3,Y,Z) radikaler Arkanist, (X,3,Z) radikaler Spiritualist und bei (X, Y, 3) radikaler Materialist
@@ -57,7 +74,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         {
             get
             {
-                switch(xenophilia)
+                switch (xenophilia)
                 {
                     case 0:
                         return Neutral;
@@ -239,6 +256,99 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         }
 
         /// <summary>
+        /// Gibt einen String zurück, welcher die derzeitige Ausrichtung der Nation widerspiegelt.
+        /// </summary>
+        public string Side
+        {
+            get
+            {
+                if (side.X < 1 && side.X > -1)
+                {
+                    if (side.Y > 1)
+                    {
+                        return Darkner;
+                    }
+                    else if (side.Y > 0 && side.Y <= 1)
+                    {
+                        return DarkInterested;
+                    }
+                    else if (side.Y < 0 && side.Y >= -1)
+                    {
+                        return LightInterested;
+                    }
+                    else if (side.Y < -1)
+                    {
+                        return Lightner;
+                    }
+                    else
+                    {
+                        return Neutral;
+                    }
+                }
+                else if (side.X > 1 || side.X < -1)
+                {
+                    if (side.Y >= 1)
+                    {
+                        return BalanceAndDark;
+                    }
+                    else if (side.Y <= -1)
+                    {
+                        return BalanceAndLight;
+                    }
+                    else if (side.X < 2 && side.X > -2)
+                    {
+                        return BalanceInterested;
+                    }
+                    else if (side.X >= 2 || side.X <= -2)
+                    {
+                        return Balance;
+                    }
+                }
+                return Neutral;
+            }
+
+            set
+            {
+                if(value == LightInterested)
+                {
+                    side = new Vector2(0, -1);
+                }
+                else if(value == Lightner)
+                {
+                    side = new Vector2(0, -2);
+                }
+                else if (value == DarkInterested)
+                {
+                    side = new Vector2(0, 1);
+                }
+                else if (value == Darkner)
+                {
+                    side = new Vector2(0, 2);
+                }
+                else if (value == BalanceInterested)
+                {
+                    side = new Vector2(1,0);
+                }
+                else if (value == BalanceAndDark)
+                {
+                    side = new Vector2(1, 1);
+                }
+                else if (value == BalanceAndLight)
+                {
+                    side = new Vector2(1, -1);
+                }
+                else if (value == Balance)
+                {
+                    side = new Vector2(2, 0);
+                }
+                else
+                {
+                    side = new Vector2(0, 0);
+                }
+            }
+        }
+
+        /// <summary>
         /// Durch diese Methode kann der Xenophilie-Rang auch mit einem Int-Wert gesetzt werden.
         /// Bei Verlassen des Grenzbereiches von -3 bis 3 wird der jeweils passende Höchstwert eingesetzt.
         /// </summary>
@@ -246,15 +356,15 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
         public void SetXenophilia(int rank)
         {
             int placeholder;
-            if(rank >= -3 && rank <= 3)
+            if (rank >= -3 && rank <= 3)
             {
                 placeholder = rank;
             }
-            else if(rank < -3)
+            else if (rank < -3)
             {
                 placeholder = -3;
             }
-            else if(rank > 3)
+            else if (rank > 3)
             {
                 placeholder = 3;
             }
@@ -317,6 +427,18 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
                 placeholder = 0;
             }
             egalitarian = placeholder;
+        }
+
+        /// <summary>
+        /// Mit Hilfe dieser Methode kann der Side-Rank über zwei Int-Parameter festgelegt werden.
+        /// X => [2, 2]
+        /// y => [2, 2]
+        /// </summary>
+        /// <param name="rankX">Spiegelt die Zugehörigkeit zum Gleichgewicht wider.</param>
+        /// <param name="rankY">Die Zugehörigkeit zu Licht (Y niedriger 0) oder Dunkelheit (Y größer 0). </param>
+        public void SetSide(int rankX, int rankY)
+        {
+            side = new Vector2(rankX, rankY);
         }
     }
 }
