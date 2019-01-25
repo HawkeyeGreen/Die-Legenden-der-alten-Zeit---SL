@@ -62,8 +62,42 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
             if (instance == null)
             {
                 instance = new DBManager();
+                instance.LoadDatabaseTable();
             }
             return instance;
+        }
+
+        private void LoadDatabaseTable()
+        {
+            DataTableReader reader = ExecuteQuery("SELECT * FROM DatabaseTable").CreateDataReader();
+            while (reader.Read())
+            {
+                string dbKey = Convert.ToString(reader.GetValue(reader.GetOrdinal("dbKey")));
+                string connection = Convert.ToString(reader.GetValue(reader.GetOrdinal("dbConnectionString")));
+                string file = connection.Split('=')[1];
+
+                if (File.Exists(file))
+                {
+                    Hermes.getInstance().log(this, dbKey + " wird registriert.");
+                    nonMainDatabase[dbKey] = connection;
+                    nonMainKeys[dbKey] = new Tuple<bool, string>(true, "");
+                }
+                else
+                {
+                    Hermes.getInstance().log(this, dbKey + " wird nicht registriert. Database-File nicht gefunden.");
+                    if(Convert.ToInt16(reader.GetValue(reader.GetOrdinal("MarkedToDelete"))) == 0)
+                    {
+                        Hermes.getInstance().log(this, "Das erste Mal nicht gefunden. Markiert zum Löschen beim nächsten Start!.");
+                        ExecuteCommandNonQuery("UPDATE DatabaseTable SET MarkedToDelete=1 WHERE dbKey='" + dbKey + "';");
+                    }
+                    else
+                    {
+                        Hermes.getInstance().log(this, "Die Datenbank wurde das zweite Mal nicht gefunden. Sie wird aus der Schlüsselliste gelöscht.");
+                        ExecuteCommandNonQuery("DELETE FROM DatabaseTable WHERE dbKey='" + dbKey + "';");
+                    }
+                }
+            }
+            reader.Close();
         }
 
         /// <summary>
@@ -218,7 +252,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
 
             try
             {
-                if (!nonMainDatabase.ContainsKey(dbKey))
+                if (!nonMainDatabase.ContainsKey(dbKey) || force)
                 {
                     if (!File.Exists(FileName))
                     {
@@ -227,7 +261,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                     }
                     else if (force)
                     {
-                        Hermes.getInstance().log(this, "File will be created!");
+                        Hermes.getInstance().log(this, "File will be created!(Force-Override!)");
                         SQLiteConnection.CreateFile(FileName);
                     }
                     else
@@ -236,6 +270,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.DB_Management
                     }
                     Hermes.getInstance().log(this, "Key will be inserted!");
                     nonMainDatabase[dbKey] = CreateConnectionString(dbKey, location);
+                    nonMainKeys[dbKey] = new Tuple<bool, string>(true, "");
+                    ExecuteCommandNonQuery("INSERT OR REPLACE INTO DatabaseTable(dbKey, dbConnectionString) VALUES('" + dbKey + "','" + nonMainDatabase[dbKey] + "');");
+                }
+                else
+                {
+                    Hermes.getInstance().log(this, "Database ist bereits registriert und Force-Marker ist nicht gesetzt.");
                 }
             }
             catch (Exception e)

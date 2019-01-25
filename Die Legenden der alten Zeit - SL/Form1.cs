@@ -31,7 +31,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void Form1_Load(object sender, EventArgs e)
         {
             UpdateAllFormData();
-            MapObject testMe = new MapObject();
+            DBManager.GetInstance().CreateDatabase("Test", true);
         }
 
         #region UpdateFuntions

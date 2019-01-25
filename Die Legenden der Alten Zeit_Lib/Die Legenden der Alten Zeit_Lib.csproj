@@ -83,6 +83,7 @@
     <Compile Include="Nations\NationManagement.cs" />
     <Compile Include="Nations\StorageMeans\Storage.cs" />
     <Compile Include="Nations\StorageMeans\StorageRequest.cs" />
+    <Compile Include="Nations\YieldbasedRessources\YieldRegister.cs" />
     <Compile Include="PlayerManagement\NewsSystem\News.cs" />
     <Compile Include="PlayerManagement\PlayerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
