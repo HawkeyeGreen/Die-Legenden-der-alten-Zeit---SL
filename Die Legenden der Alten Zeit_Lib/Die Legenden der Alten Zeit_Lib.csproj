@@ -68,6 +68,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Nations\Nation.cs" />
+    <Compile Include="Nations\NationManagement.cs" />
     <Compile Include="Obsolete\CharacterManagement\AttributeSystem\AttributeSet.cs" />
     <Compile Include="Obsolete\CharacterManagement\AttributeSystem\StandardAttribute.cs" />
     <Compile Include="Obsolete\DB_Management\DBManager.cs" />
@@ -100,17 +102,17 @@
     <Compile Include="Obsolete\World\Ressources\Source.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\The Vault\Zeus\Zeus.csproj">
-      <Project>{068e5f04-d5ec-4daa-a8fa-46fed3f2b708}</Project>
-      <Name>Zeus</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Obsolete\Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Zeus\Zeus.csproj">
+      <Project>{068e5f04-d5ec-4daa-a8fa-46fed3f2b708}</Project>
+      <Name>Zeus</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.109.2\build\net46\System.Data.SQLite.Core.targets')" />

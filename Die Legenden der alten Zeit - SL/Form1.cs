@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SQLite;
 
+using Die_Legenden_der_Alten_Zeit_Lib.Nations;
+
 using Zeus.Hermes;
 
 namespace Die_Legenden_der_alten_Zeit___SL
@@ -25,6 +27,8 @@ namespace Die_Legenden_der_alten_Zeit___SL
         {
             UpdateAllFormData();
 
+            NationManagement.StartManagement(AppDomain.CurrentDomain.BaseDirectory + "Nations\\");
+            NationManagement.GetManagement().SaveState(AppDomain.CurrentDomain.BaseDirectory + "Nations\\");
         }
 
         #region UpdateFuntions

@@ -106,7 +106,7 @@
     <Folder Include="Sources\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\The Vault\Zeus\Zeus.csproj">
+    <ProjectReference Include="..\..\Zeus\Zeus.csproj">
       <Project>{068e5f04-d5ec-4daa-a8fa-46fed3f2b708}</Project>
       <Name>Zeus</Name>
     </ProjectReference>
