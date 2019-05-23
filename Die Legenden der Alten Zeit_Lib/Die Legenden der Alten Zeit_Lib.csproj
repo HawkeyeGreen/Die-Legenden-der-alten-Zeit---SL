@@ -68,46 +68,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\Vector2D.cs" />
     <Compile Include="Nations\Nation.cs" />
     <Compile Include="Nations\NationManagement.cs" />
-    <Compile Include="Obsolete\CharacterManagement\AttributeSystem\AttributeSet.cs" />
-    <Compile Include="Obsolete\CharacterManagement\AttributeSystem\StandardAttribute.cs" />
-    <Compile Include="Obsolete\DB_Management\DBManager.cs" />
-    <Compile Include="Obsolete\EffectSystem\ConditionTracking\AndCondition.cs" />
-    <Compile Include="Obsolete\EffectSystem\ConditionTracking\Condition.cs" />
-    <Compile Include="Obsolete\EffectSystem\EffectManagement\EffectDistributor.cs" />
-    <Compile Include="Obsolete\EffectSystem\EffectManagement\EffectManager.cs" />
-    <Compile Include="Obsolete\EffectSystem\Effects\Effect.cs" />
-    <Compile Include="Obsolete\EffectSystem\Effects\Nuggets\EffectNugget.cs" />
-    <Compile Include="Obsolete\EffectSystem\Effects\Nuggets\EffectNuggetSet.cs" />
-    <Compile Include="Obsolete\EffectSystem\IEffectable.cs" />
-    <Compile Include="Obsolete\Nations\Ethics.cs" />
-    <Compile Include="Obsolete\Nations\NationManagement.cs" />
-    <Compile Include="Obsolete\Nations\StorageMeans\Storage.cs" />
-    <Compile Include="Obsolete\Nations\StorageMeans\StorageRequest.cs" />
-    <Compile Include="Obsolete\Nations\YieldbasedRessources\YieldRegister.cs" />
-    <Compile Include="Obsolete\PlayerManagement\NewsSystem\News.cs" />
-    <Compile Include="Obsolete\PlayerManagement\PlayerManager.cs" />
+    <Compile Include="Nations\Ownership.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Obsolete\World\Global\Locomotor.cs" />
-    <Compile Include="Obsolete\World\Global\MapObject.cs" />
-    <Compile Include="Obsolete\World\Map\Flora.cs" />
-    <Compile Include="Obsolete\World\Map\Landmark.cs" />
-    <Compile Include="Obsolete\World\Map\Map.cs" />
-    <Compile Include="Obsolete\World\Map\Province.cs" />
-    <Compile Include="Obsolete\World\Map\Region.cs" />
-    <Compile Include="Obsolete\World\Map\Relief.cs" />
-    <Compile Include="Obsolete\World\Map\Tile.cs" />
-    <Compile Include="Obsolete\World\Ressources\Ressource.cs" />
-    <Compile Include="Obsolete\World\Ressources\Source.cs" />
+    <Compile Include="Universe\GameSpace.cs" />
+    <Compile Include="Universe\Map\Map.cs" />
+    <Compile Include="Universe\Map\Province.cs" />
+    <Compile Include="Universe\Map\Region.cs" />
+    <Compile Include="Universe\Map\Tile.cs" />
+    <Compile Include="Universe\WorldSpace.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Obsolete\Content\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\Zeus\Zeus.csproj">
       <Project>{068e5f04-d5ec-4daa-a8fa-46fed3f2b708}</Project>

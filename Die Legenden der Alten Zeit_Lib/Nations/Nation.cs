@@ -4,10 +4,18 @@ using System.IO;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.Nations
 {
-    public class Nation
+    public class Nation : Ownership
     {
 
         private NationData data;
+
+        public string Name
+        {
+            get => data.Name;
+            set => data.Name = value;
+        }
+
+        public string OwnershipType => "Nation";
 
         public Nation(NationData nationData)
         {
