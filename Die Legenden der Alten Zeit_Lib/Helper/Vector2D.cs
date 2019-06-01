@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Die_Legenden_der_Alten_Zeit_Lib.Helper
+namespace Die_Legenden_der_Alten_Zeit_Lib
 {
     [Serializable]
     public class Vector2D
     {
-        public double X { get; set; }
-        public double Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
 
-        public Vector2D(double X, double Y)
+        public Vector2D(int X, int Y)
         {
             this.X = X;
             this.Y = Y;
