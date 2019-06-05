@@ -74,6 +74,7 @@
     <Compile Include="Helper\DepositSizes.cs" />
     <Compile Include="Helper\RandomHelper.cs" />
     <Compile Include="Helper\Vector2D.cs" />
+    <Compile Include="Nations\Communities\Community.cs" />
     <Compile Include="Nations\Nation.cs" />
     <Compile Include="Nations\NationManagement.cs" />
     <Compile Include="Nations\Ownership.cs" />

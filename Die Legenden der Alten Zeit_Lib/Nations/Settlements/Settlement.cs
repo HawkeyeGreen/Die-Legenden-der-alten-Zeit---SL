@@ -25,6 +25,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
         }
         public string Map => data.Map;
 
+        public long Community
+        {
+            get => data.Community;
+            set => data.Community = value;
+        }
+
         public Vector2D Position => data.Position;
         public List<int> ChildCities
         {
@@ -39,6 +45,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
         public int ID { get; set; }
         public string Name { get; set; }
         public string Map { get; set; }
+        public long Community { get; set; }
         public Vector2D Position { get; set; }
         public int ParentCity { get; set; }
         public List<int> ChildCities { get; set; }

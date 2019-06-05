@@ -45,5 +45,8 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
         public string Name { get; set; }
         public string RTF_Description_Path { get; set; }
         public Dictionary<string, int[]> DepositRanges { get; set; }
+
+        public List<string> NeededTileAttributes { get; set; }
+        public List<string> ForbiddenTileAttributes { get; set; }
     }
 }

@@ -18,6 +18,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Map
         public List<int> Effects { get; set; }
         public List<int> Features { get; set; }
         public Dictionary<string, int> Ressources { get; set; }
+        public Dictionary<string, int> Monsters { get; set; }
     }
 
 }
