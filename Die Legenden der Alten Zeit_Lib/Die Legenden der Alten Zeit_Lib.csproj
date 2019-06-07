@@ -81,12 +81,13 @@
     <Compile Include="Nations\Settlements\Settlement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ressources\BaseRessource.cs" />
-    <Compile Include="Ressources\NonRegeneratingRessource.cs" />
-    <Compile Include="Ressources\RegeneratingRessource.cs" />
+    <Compile Include="Ressources\Source.cs" />
     <Compile Include="Universe\GameSpace.cs" />
+    <Compile Include="Universe\Map\CreaturesMap.cs" />
     <Compile Include="Universe\Map\Map.cs" />
     <Compile Include="Universe\Map\Province.cs" />
     <Compile Include="Universe\Map\Region.cs" />
+    <Compile Include="Universe\Map\SourceMap.cs" />
     <Compile Include="Universe\Map\Tile.cs" />
     <Compile Include="Universe\Map\TileAttributes\Relief.cs" />
     <Compile Include="Universe\Map\TileAttributes\TileBaseTypes.cs" />
@@ -97,7 +98,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Creatures\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Zeus\Zeus.csproj">
       <Project>{068e5f04-d5ec-4daa-a8fa-46fed3f2b708}</Project>

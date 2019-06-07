@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 {
-    public class BaseRessource
+    public class Ressource
     {
-        BaseRessourceData baseData;
+        RessourceData baseData;
         public string Name => baseData.Name;
         public string DescriptionPath
         {
@@ -19,11 +19,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
         {
             get => baseData.DepositRanges;
             set => baseData.DepositRanges = value;
-        }
-
-        public virtual int RoundUpdate(int amount)
-        {
-            return amount;
         }
 
         private void InitializeData()
@@ -40,7 +35,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
     }
 
     [Serializable]
-    public struct BaseRessourceData
+    public struct RessourceData
     {
         public string Name { get; set; }
         public string RTF_Description_Path { get; set; }
