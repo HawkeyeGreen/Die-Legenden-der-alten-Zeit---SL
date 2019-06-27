@@ -139,6 +139,17 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
             }
         }
 
+        public static List<string> GetAspectNames()
+        {
+            List<string> Return = new List<string>();
+            IEnumerator<string> enumerator = Directory.EnumerateFiles(PATH).GetEnumerator();
+            while(enumerator.MoveNext())
+            {
+                Return.Add(Path.GetFileNameWithoutExtension(enumerator.Current));
+            }
+            return Return;
+        }
+
         public override string ToString()
         {
             return "Aspect: " + Name + "\n [1]: " + RankNames[0] + "\n [2]: " + RankNames[1] + "\n [3]: " + RankNames[2];

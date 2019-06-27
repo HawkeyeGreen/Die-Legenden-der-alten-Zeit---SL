@@ -38,25 +38,20 @@ namespace Die_Legenden_der_alten_Zeit___SL
         // It will use intelligent ways to not collide with user-input data etc.
         private void UpdateAllFormData()
         {
-            UpdateStandardAttributesTab();
-            UpdateNewsTab();
+            UpdateAspectsTab();
         }
 
-        /// <summary>
-        /// Diese Methode kümmert sich um das Updaten des SL-Tabs für die Attribute.
-        /// </summary>
-        private void UpdateStandardAttributesTab()
+        private void UpdateAspectsTab()
         {
-
+            aspectListBox1.ClearSelected();
+            aspectListBox1.Items.Clear();
+            List<string> names = Aspect.GetAspectNames();
+            foreach (string name in names)
+            {
+                aspectListBox1.Items.Add(name);
+            }
         }
 
-        /// <summary>
-        /// Diese Methode verwaltet das Updaten des News-Tab.
-        /// </summary>
-        private void UpdateNewsTab()
-        {
-
-        }
         #endregion
 
 
@@ -70,5 +65,21 @@ namespace Die_Legenden_der_alten_Zeit___SL
             this.Close();
         }
 
+        private void AspectListBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            string toolTip = "";
+
+            int index = aspectListBox1.IndexFromPoint(e.Location);
+
+            if (index >= 0 && index < aspectListBox1.Items.Count)
+            {
+                toolTip = Aspect.GetAspect(aspectListBox1.Items[index].ToString()).ToString();
+            }
+
+            if (toolTipAspectListBox.GetToolTip(aspectListBox1) != toolTip)
+            {
+                toolTipAspectListBox.SetToolTip(aspectListBox1, toolTip);
+            }
+        }
     }
 }
