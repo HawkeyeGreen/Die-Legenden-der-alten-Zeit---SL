@@ -19,25 +19,45 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
             set => data.Ressources = value;
         }
 
+        public int WorkPerUnit
+        {
+            get => data.WorkPerUnit;
+            set => data.WorkPerUnit = value;
+        }
+
+        public Dictionary<string, int> RessourcesPerUnit
+        {
+            get => data.RessourcesPerUnit;
+            set => data.RessourcesPerUnit = value;
+        }
+
         public Dictionary<string, int> Gather(int work)
         {
             Dictionary<string, int> returnMe = new Dictionary<string, int>();
-            foreach(string res in Ressources)
+            foreach (string res in Ressources)
             {
-                int neededWork = Ressource.GetRessource(res).WorkPerUnit;
-                if(work > neededWork)
-                {
-                    int amount = Convert.ToInt32(Math.Floor(Convert.ToDouble(work / neededWork)));
-                    returnMe[res] = amount;
-                }
+                returnMe[res] = Convert.ToInt32(Math.Round((double)(work / WorkPerUnit) * RessourcesPerUnit[res]));
             }
             return returnMe;
+        }
+
+        public void InitializeData()
+        {
+            data = new SourceData
+            {
+                WorkPerUnit = 1,
+                Ressources = new List<string>(),
+                RessourcesPerUnit = new Dictionary<string, int>()
+            };
         }
     }
 
     [Serializable]
     public struct SourceData
     {
+        public int WorkPerUnit { get; set; }
         public List<string> Ressources { get; set; }
+        public Dictionary<string, int> RessourcesPerUnit { get; set; }
+        public string RTF_Path { get; set; }
     }
 }

@@ -73,7 +73,6 @@
     <Compile Include="Helper\IDHelper\PawnIDHelper.cs" />
     <Compile Include="Helper\DepositSizes.cs" />
     <Compile Include="Helper\RandomHelper.cs" />
-    <Compile Include="Helper\Vector2D.cs" />
     <Compile Include="Helper\WildernessGrade.cs" />
     <Compile Include="Nations\Communities\Community.cs" />
     <Compile Include="Nations\Nation.cs" />
@@ -85,15 +84,16 @@
     <Compile Include="Ressources\Source.cs" />
     <Compile Include="Universe\Aspects\Aspect.cs" />
     <Compile Include="Universe\GameSpace.cs" />
-    <Compile Include="Universe\Map\CreaturesMap.cs" />
+    <Compile Include="Universe\Map\Submaps\CreaturesMap.cs" />
     <Compile Include="Universe\Map\Map.cs" />
     <Compile Include="Universe\Map\Province.cs" />
     <Compile Include="Universe\Map\Region.cs" />
-    <Compile Include="Universe\Map\SourceMap.cs" />
-    <Compile Include="Universe\Map\Tile.cs" />
-    <Compile Include="Universe\Map\TileAttributes\Relief.cs" />
-    <Compile Include="Universe\Map\TileAttributes\TileBaseTypes.cs" />
-    <Compile Include="Universe\Map\TileAttributes\Vegetation.cs" />
+    <Compile Include="Universe\Map\Submaps\SourceMap.cs" />
+    <Compile Include="Universe\Map\Submaps\TileMap.cs" />
+    <Compile Include="Universe\Map\Tiles\Tile.cs" />
+    <Compile Include="Universe\Map\Tiles\TileAttributes\Relief.cs" />
+    <Compile Include="Universe\Map\Tiles\TileAttributes\TileBaseTypes.cs" />
+    <Compile Include="Universe\Map\Tiles\TileAttributes\Vegetation.cs" />
     <Compile Include="Universe\WorldSpace.cs" />
   </ItemGroup>
   <ItemGroup>

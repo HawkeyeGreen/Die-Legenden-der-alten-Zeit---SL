@@ -27,12 +27,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
             set => data.DepositRanges = value;
         }
 
-        public int WorkPerUnit
-        {
-            get => data.WorkPerUnit;
-            set => data.WorkPerUnit = value;
-        }
-
         public List<string> NeededTileAttributes
         {
             get => data.NeededTileAttributes;
@@ -97,8 +91,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
         public string Name { get; set; }
         public string RTF_Description_Path { get; set; }
         public Dictionary<string, int[]> DepositRanges { get; set; }
-
-        public int WorkPerUnit { get; set; }
 
         public List<string> NeededTileAttributes { get; set; }
         public List<string> ForbiddenTileAttributes { get; set; }
