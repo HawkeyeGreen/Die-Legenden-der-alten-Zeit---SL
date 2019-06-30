@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Zeus.Hermes;
 
 namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 {
     public class Ressource
     {
-        private static string Path = AppDomain.CurrentDomain.BaseDirectory + "\\Ressources\\";
-        private static Dictionary<string, Ressource> instances = new Dictionary<string, Ressource>();
+        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "\\Ressources\\";
+        private static Dictionary<string, Ressource> Instances = new Dictionary<string, Ressource>();
 
         #region Properties & Fields
         private RessourceData data;
@@ -21,49 +22,29 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
             get => data.RTF_Description_Path;
             set => data.RTF_Description_Path = value;
         }
-        public Dictionary<string, int[]> DepositRanges
-        {
-            get => data.DepositRanges;
-            set => data.DepositRanges = value;
-        }
-
-        public List<string> NeededTileAttributes
-        {
-            get => data.NeededTileAttributes;
-            set => data.NeededTileAttributes = value;
-        }
-
-        public List<string> ForbiddenTileAttributes
-        {
-            get => data.ForbiddenTileAttributes;
-            set => data.ForbiddenTileAttributes = value;
-        }
-
+               
         #endregion
 
         private void InitializeData()
         {
-            DepositRanges = new Dictionary<string, int[]>
-            {
-                [DepositSizes.VerySmall] = new int[2],
-                [DepositSizes.Small] = new int[2],
-                [DepositSizes.Medium] = new int[2],
-                [DepositSizes.Large] = new int[2],
-                [DepositSizes.VeryLarge] = new int[2]
-            };
-            NeededTileAttributes = new List<string>();
-            ForbiddenTileAttributes = new List<string>();
+            DescriptionPath = null;
         }
+
 
         public Ressource(string name)
         {
-            if (File.Exists(Path + name + ".xml"))
+            if (!Directory.Exists(PATH))
+            {
+                Directory.CreateDirectory(PATH);
+            }
+
+            if (File.Exists(PATH + name + ".xml"))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(RessourceData));
-                using (Stream stream = File.OpenRead(Path + name + ".xml"))
+                using (Stream stream = File.OpenRead(PATH + name + ".xml"))
                 {
                     data = (RessourceData)serializer.Deserialize(stream);
-                }
+                }                
             }
             else
             {
@@ -77,11 +58,89 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public static Ressource GetRessource(string name)
         {
-            if (!instances.ContainsKey(name))
+            if (!Instances.ContainsKey(name))
             {
-                instances[name] = new Ressource(name);
+                Instances[name] = new Ressource(name);
             }
-            return instances[name];
+            return Instances[name];
+        }
+
+        public static List<string> GetRessourceNames()
+        {
+            if (!Directory.Exists(PATH))
+            {
+                Directory.CreateDirectory(PATH);
+            }
+
+            List<string> Return = new List<string>();
+            IEnumerator<string> enumerator = Directory.EnumerateFiles(PATH).GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Return.Add(Path.GetFileNameWithoutExtension(enumerator.Current));
+            }
+            return Return;
+        }
+
+        public static void Save()
+        {
+            if (!Directory.Exists(PATH))
+            {
+                Directory.CreateDirectory(PATH);
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(RessourceData));
+            foreach (Ressource ressource in Instances.Values)
+            {
+                try
+                {
+                    using (Stream file = File.OpenWrite(PATH + "\\" + ressource.Name + ".xml"))
+                    {
+                        serializer.Serialize(file, ressource.data);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Hermes.getInstance().log("Error occured while saving ressource: " + e.Message, "RessourceSaver", 1);
+                }
+            }
+        }
+
+        public static void Save(Ressource ressource)
+        {
+            if (!Directory.Exists(PATH))
+            {
+                Directory.CreateDirectory(PATH);
+            }
+
+            XmlSerializer serializer = new XmlSerializer(typeof(RessourceData));
+
+            try
+            {
+                using (Stream file = File.OpenWrite(PATH + "\\" + ressource.Name + ".xml"))
+                {
+                    serializer.Serialize(file, ressource.data);
+                }
+            }
+            catch (Exception e)
+            {
+                Hermes.getInstance().log("Error occured while saving ressource: " + e.Message, "RessourceSaver", 1);
+            }
+
+        }
+
+        public static bool DoesRessourceExist(string name)
+        {
+            if (Instances.ContainsKey(name))
+            {
+                return true;
+            }
+
+            if (File.Exists(PATH + name + ".xml"))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 
@@ -90,9 +149,6 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
     {
         public string Name { get; set; }
         public string RTF_Description_Path { get; set; }
-        public Dictionary<string, int[]> DepositRanges { get; set; }
-
-        public List<string> NeededTileAttributes { get; set; }
-        public List<string> ForbiddenTileAttributes { get; set; }
+        
     }
 }

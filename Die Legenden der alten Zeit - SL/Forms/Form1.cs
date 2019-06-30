@@ -14,6 +14,7 @@ using Die_Legenden_der_Alten_Zeit_Lib.Nations;
 using Zeus.Hermes;
 using Die_Legenden_der_Alten_Zeit_Lib.Universe.Map.TileAttributes;
 using Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects;
+using Die_Legenden_der_Alten_Zeit_Lib.Ressources;
 
 namespace Die_Legenden_der_alten_Zeit___SL
 {
@@ -39,6 +40,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void UpdateAllFormData()
         {
             UpdateAspectsTab();
+            UpdateRessourcesTab();
         }
 
         private void UpdateAspectsTab()
@@ -49,6 +51,18 @@ namespace Die_Legenden_der_alten_Zeit___SL
             foreach (string name in names)
             {
                 aspectListBox1.Items.Add(name);
+            }
+        }
+
+        private void UpdateRessourcesTab()
+        {
+            //ressourcesListBox1
+            ressourcesListBox1.ClearSelected();
+            ressourcesListBox1.Items.Clear();
+            List<string> names = Ressource.GetRessourceNames();
+            foreach (string name in names)
+            {
+                ressourcesListBox1.Items.Add(name);
             }
         }
 
@@ -80,6 +94,13 @@ namespace Die_Legenden_der_alten_Zeit___SL
             {
                 toolTipAspectListBox.SetToolTip(aspectListBox1, toolTip);
             }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            NeueRessource ressource = new NeueRessource();
+            ressource.ShowDialog();
+            UpdateRessourcesTab();
         }
     }
 }

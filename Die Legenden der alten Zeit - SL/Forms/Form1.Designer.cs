@@ -35,12 +35,15 @@
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.aspectListBox1 = new System.Windows.Forms.ListBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.toolTipAspectListBox = new System.Windows.Forms.ToolTip(this.components);
+            this.ressourcesListBox1 = new System.Windows.Forms.ListBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -89,16 +92,6 @@
             this.tabPage1.Text = "Aspekte";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(1426, 546);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
             // aspectListBox1
             // 
             this.aspectListBox1.FormattingEnabled = true;
@@ -107,6 +100,36 @@
             this.aspectListBox1.Size = new System.Drawing.Size(156, 511);
             this.aspectListBox1.TabIndex = 0;
             this.aspectListBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.AspectListBox1_MouseMove);
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.ressourcesListBox1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1426, 546);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Ressources";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ressourcesListBox1
+            // 
+            this.ressourcesListBox1.FormattingEnabled = true;
+            this.ressourcesListBox1.Location = new System.Drawing.Point(9, 7);
+            this.ressourcesListBox1.Name = "ressourcesListBox1";
+            this.ressourcesListBox1.Size = new System.Drawing.Size(120, 524);
+            this.ressourcesListBox1.TabIndex = 0;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(149, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(110, 45);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "Neue Ressource";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // Form1
             // 
@@ -126,6 +149,7 @@
             this.menuStrip1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -141,6 +165,8 @@
         private System.Windows.Forms.ListBox aspectListBox1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ToolTip toolTipAspectListBox;
+        private System.Windows.Forms.ListBox ressourcesListBox1;
+        private System.Windows.Forms.Button button1;
     }
 }
 
