@@ -75,13 +75,35 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public SourceTemplate()
         {
-            DepositRanges = new Dictionary<string, int[]>();
-            for (int i = 0; i < data.DepositNames.Count; i++)
-            {
-                DepositRanges[data.DepositNames[i]] = data.DepositRanges[i];
-            }
             InitializeData();
             PushDepositRangeToData();
+        }
+
+        public static SourceTemplate GetTemplate(string name)
+        {
+            if(!Instances.ContainsKey(name))
+            {
+                if (!Directory.Exists(PATH))
+                {
+                    Directory.CreateDirectory(PATH);
+                }
+
+                if (File.Exists(PATH + name + ".xml"))
+                {
+                    SourceTemplate template = new SourceTemplate();
+                    XmlSerializer serializer = new XmlSerializer(typeof(SourceTData));
+                    using (Stream stream = File.OpenRead(PATH + name + ".xml"))
+                    {
+                        template.data = (SourceTData)serializer.Deserialize(stream);
+                    }
+                    Instances[name] = template;
+                }
+                else
+                {
+                    throw new Exception("SourceTemplate not found!");
+                }
+            }
+            return Instances[name];
         }
 
         public Dictionary<string, int> Gather(int work)
@@ -148,6 +170,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
             XmlSerializer serializer = new XmlSerializer(typeof(SourceTData));
             foreach (SourceTemplate sourceT in Instances.Values)
             {
+                sourceT.PushDepositRangeToData();
                 try
                 {
                     using (Stream file = File.OpenWrite(PATH + "\\" + sourceT.Name + ".xml"))
@@ -164,13 +187,13 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public static void Save(SourceTemplate sourceT)
         {
+            sourceT.PushDepositRangeToData();
             if (!Directory.Exists(PATH))
             {
                 Directory.CreateDirectory(PATH);
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(RessourceData));
-
             try
             {
                 using (Stream file = File.OpenWrite(PATH + "\\" + sourceT.Name + ".xml"))
@@ -185,7 +208,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         }
 
-        public static bool DoesRessourceExist(string name)
+        public static bool DoesTemplateExist(string name)
         {
             if (Instances.ContainsKey(name))
             {

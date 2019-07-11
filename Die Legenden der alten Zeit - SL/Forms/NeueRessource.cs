@@ -52,6 +52,6 @@ namespace Die_Legenden_der_alten_Zeit___SL
             }
         }
 
-        private List<string> GetLines(TextBox text) => text.Text.Split('\n').ToList();
+        
     }
 }

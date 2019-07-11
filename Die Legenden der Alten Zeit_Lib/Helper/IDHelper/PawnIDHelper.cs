@@ -61,7 +61,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
             Instance = new PawnIDHelper();
         }
 
-        public PawnIDHelper GetIDHelper()
+        public static PawnIDHelper GetIDHelper()
         {
             return Instance;
         }

@@ -57,5 +57,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
         {
             return RNGesus.Next(0, 2);
         }
+
+        public Random GetGenerator() => RNGesus;
     }
 }

@@ -37,9 +37,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.aspectListBox1 = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.toolTipAspectListBox = new System.Windows.Forms.ToolTip(this.components);
-            this.ressourcesListBox1 = new System.Windows.Forms.ListBox();
+            this.ressourcesListBox2 = new System.Windows.Forms.ListBox();
+            this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.ressourcesListBox1 = new System.Windows.Forms.ListBox();
+            this.toolTipAspectListBox = new System.Windows.Forms.ToolTip(this.components);
+            this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -59,6 +62,7 @@
             // hauptmenüToolStripMenuItem
             // 
             this.hauptmenüToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.speichernToolStripMenuItem,
             this.beendenToolStripMenuItem});
             this.hauptmenüToolStripMenuItem.Name = "hauptmenüToolStripMenuItem";
             this.hauptmenüToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
@@ -67,7 +71,7 @@
             // beendenToolStripMenuItem
             // 
             this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(120, 22);
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.beendenToolStripMenuItem.Text = "Beenden";
             this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
             // 
@@ -103,6 +107,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.ressourcesListBox2);
+            this.tabPage2.Controls.Add(this.button2);
             this.tabPage2.Controls.Add(this.button1);
             this.tabPage2.Controls.Add(this.ressourcesListBox1);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -113,13 +119,23 @@
             this.tabPage2.Text = "Ressources";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // ressourcesListBox1
+            // ressourcesListBox2
             // 
-            this.ressourcesListBox1.FormattingEnabled = true;
-            this.ressourcesListBox1.Location = new System.Drawing.Point(9, 7);
-            this.ressourcesListBox1.Name = "ressourcesListBox1";
-            this.ressourcesListBox1.Size = new System.Drawing.Size(120, 524);
-            this.ressourcesListBox1.TabIndex = 0;
+            this.ressourcesListBox2.FormattingEnabled = true;
+            this.ressourcesListBox2.Location = new System.Drawing.Point(297, 6);
+            this.ressourcesListBox2.Name = "ressourcesListBox2";
+            this.ressourcesListBox2.Size = new System.Drawing.Size(120, 524);
+            this.ressourcesListBox2.TabIndex = 3;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(435, 6);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(110, 45);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Neues SourceTemplate";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
             // 
             // button1
             // 
@@ -130,6 +146,21 @@
             this.button1.Text = "Neue Ressource";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // ressourcesListBox1
+            // 
+            this.ressourcesListBox1.FormattingEnabled = true;
+            this.ressourcesListBox1.Location = new System.Drawing.Point(9, 7);
+            this.ressourcesListBox1.Name = "ressourcesListBox1";
+            this.ressourcesListBox1.Size = new System.Drawing.Size(120, 524);
+            this.ressourcesListBox1.TabIndex = 0;
+            // 
+            // speichernToolStripMenuItem
+            // 
+            this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.speichernToolStripMenuItem.Text = "Speichern";
+            this.speichernToolStripMenuItem.Click += new System.EventHandler(this.SpeichernToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -167,6 +198,9 @@
         private System.Windows.Forms.ToolTip toolTipAspectListBox;
         private System.Windows.Forms.ListBox ressourcesListBox1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ListBox ressourcesListBox2;
+        private System.Windows.Forms.ToolStripMenuItem speichernToolStripMenuItem;
     }
 }
 

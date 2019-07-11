@@ -15,6 +15,10 @@ using Zeus.Hermes;
 using Die_Legenden_der_Alten_Zeit_Lib.Universe.Map.TileAttributes;
 using Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects;
 using Die_Legenden_der_Alten_Zeit_Lib.Ressources;
+using Die_Legenden_der_alten_Zeit___SL.Forms;
+using Die_Legenden_der_Alten_Zeit_Lib.Helper;
+using Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements;
+using Die_Legenden_der_Alten_Zeit_Lib;
 
 namespace Die_Legenden_der_alten_Zeit___SL
 {
@@ -30,8 +34,24 @@ namespace Die_Legenden_der_alten_Zeit___SL
         {
             Hermes.DebugLevel = 5;
             UpdateAllFormData();
-            Aspect.GetAspect("Good");
-            Aspect.GetAspect("Evil");
+            TagCatalog.GetCatalog();
+            SettlementManager.GetInstance();
+
+            for (int i = 0; i < 2471; i++)
+            {
+                new Settlement(AppDomain.CurrentDomain.BaseDirectory + "//Settlements//Test//", "Testtown");
+            }
+
+            for (int i = 0; i < 1712; i++)
+            {
+                SettlementManager.GetInstance().RemoveSettlement(RandomHelper.GetHelper().GetGenerator().Next(0, 2471));
+            }
+
+            int t = RandomHelper.GetHelper().GetGenerator().Next(0, 1137);
+            for(int i = 0; i < t; i++)
+            {
+                new Settlement(AppDomain.CurrentDomain.BaseDirectory + "//Settlements//Second//", "And another one");
+            }
         }
 
         #region UpdateFuntions
@@ -63,6 +83,13 @@ namespace Die_Legenden_der_alten_Zeit___SL
             foreach (string name in names)
             {
                 ressourcesListBox1.Items.Add(name);
+            }
+            ressourcesListBox2.ClearSelected();
+            ressourcesListBox2.Items.Clear();
+            names = SourceTemplate.GetSourcesTemplates();
+            foreach (string name in names)
+            {
+                ressourcesListBox2.Items.Add(name);
             }
         }
 
@@ -101,6 +128,18 @@ namespace Die_Legenden_der_alten_Zeit___SL
             NeueRessource ressource = new NeueRessource();
             ressource.ShowDialog();
             UpdateRessourcesTab();
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            NeueSource source = new NeueSource();
+            source.ShowDialog();
+            UpdateRessourcesTab();
+        }
+
+        private void SpeichernToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SettlementManager.GetInstance().Save();
         }
     }
 }

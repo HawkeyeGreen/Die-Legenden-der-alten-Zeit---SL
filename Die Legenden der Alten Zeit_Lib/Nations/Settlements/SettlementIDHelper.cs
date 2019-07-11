@@ -26,8 +26,8 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
 
         private Queue<int> FreedIDs
         {
-            get => data.FreedIDs;
-            set => data.FreedIDs = value;
+            get;
+            set;
         }
 
         private SettlementIDHelper()
@@ -40,14 +40,16 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
                 {
                     data = (SettlementIDHelperData)serializer.Deserialize(file);
                 }
+                FreedIDs = new Queue<int>(data.FreedIDs);
             }
             else
             {
                 data = new SettlementIDHelperData
                 {
                     MaxID = 0,
-                    FreedIDs = new Queue<int>()
+                    FreedIDs = new List<int>()
                 };
+                FreedIDs = new Queue<int>();
             }
         }
 
@@ -61,13 +63,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
             Instance = new SettlementIDHelper();
         }
 
-        public SettlementIDHelper GetIDHelper()
+        public static SettlementIDHelper GetIDHelper()
         {
             return Instance;
         }
 
         public void Save()
         {
+            data.FreedIDs = FreedIDs.ToList();
             XmlSerializer serializer = new XmlSerializer(typeof(SettlementIDHelperData));
 
             using (StreamWriter file = new StreamWriter(PATH + "\\SettlementIDHelper.xml"))
@@ -93,7 +96,10 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
 
         public void FreeID(int ID)
         {
-            FreedIDs.Enqueue(ID);
+            if(!FreedIDs.Contains(ID))
+            {
+                FreedIDs.Enqueue(ID);
+            }
         }
     }
 
@@ -101,7 +107,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib
     public struct SettlementIDHelperData
     {
         public int MaxID { get; set; }
-        public Queue<int> FreedIDs { get; set; }
+        public List<int> FreedIDs { get; set; }
     }
 
 }
