@@ -18,10 +18,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Map
             protected set;
         }
 
-
         private SourceMap sourceMap;
         private CreaturesMap creaturesMap;
         private TileMap tileMap;
+
+        public WorldSpace WorldSpace { get; protected set; }
+        public GameSpace GameSpace => WorldSpace.GameSpace;
 
         public Map()
         {

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Die_Legenden_der_Alten_Zeit_Lib.Nations.Communities;
+using Die_Legenden_der_Alten_Zeit_Lib.Universe.Map;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -34,12 +36,8 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
 
             set => data.Name = value;
         }
-        public string Map => data.Map;
-        public long Community
-        {
-            get => data.Community;
-            set => data.Community = value;
-        }
+        public Map Map { get; set; }
+        public Community Community { get; set; }
         public Vector2D Position => data.Position;
         public List<int> PropertyIDs
         {
@@ -72,7 +70,11 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
             Save();
             SettlementManager.GetInstance().RegisterSettlement(ID, path);
         }
-
+        public void StepUpdate()
+        {
+            // Get our current Step from the GameSpace we are located in
+            int Step = Map.GameSpace.Step;
+        }
         public void Save()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(SettlementData));
@@ -86,6 +88,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
     [Serializable]
     public struct SettlementData
     {
+        public int CurrentStep { get; set; }
         public int ID { get; set; }
         public string Name { get; set; }
         public string Map { get; set; }
