@@ -33,9 +33,9 @@ namespace Die_Legenden_der_alten_Zeit___SL.Forms
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(GlobalConfiguration.Documents))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents))
             {
-                Directory.CreateDirectory(GlobalConfiguration.Documents);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents);
             }
 
             if (SourceTemplate.DoesTemplateExist(textBoxName.Text))
@@ -43,27 +43,27 @@ namespace Die_Legenden_der_alten_Zeit___SL.Forms
                 DialogResult result = MessageBox.Show("Template scheint schon zu existieren. Eindeutigen Namen wählen oder alte Ressource löschen und erneut versuchen?", "Alte Ressource löschen?", MessageBoxButtons.YesNo);
                 if (result == DialogResult.Yes)
                 {
-                    File.Delete(SourceTemplate.PATH + textBoxName.Text + ".xml");
-                    File.Delete(GlobalConfiguration.Documents + "//SourceTemplates//" + textBoxName.Text + ".rtf");
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + SourceTemplate.PATH + textBoxName.Text + ".xml");
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//SourceTemplates//" + textBoxName.Text + ".rtf");
                     MessageBox.Show("Alte Ressource gelöscht. Bitte erneut versuchen diese zu erstellen.");
                 }
             }
             else
             {
-                if (!Directory.Exists(GlobalConfiguration.Documents + "//SourceTemplates//"))
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//SourceTemplates//"))
                 {
-                    Directory.CreateDirectory(GlobalConfiguration.Documents + "//SourceTemplates//");
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//SourceTemplates//");
                 }
-                richTextBoxDescr.SaveFile(GlobalConfiguration.Documents + "//SourceTemplates//" + textBoxName.Text + ".rtf");
+                richTextBoxDescr.SaveFile(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//SourceTemplates//" + textBoxName.Text + ".rtf");
                 SourceTemplate sourceTemplate = new SourceTemplate()
                 {
                     Name = textBoxName.Text,
-                    DescriptionPath = "//Content//Documents//SourceTemplates//" + textBoxName.Text + ".rtf",
+                    DescriptionPath = GlobalConfiguration.Documents + "//SourceTemplates//" + textBoxName.Text + ".rtf",
                     NeededTileAttributes = GetLines(textBoxNeeded),
                     ForbiddenTileAttributes = GetLines(textBoxNeeded)
                 };
                 sourceTemplate.DepositRanges[DepositSizes.VerySmall] = new int[2] { Convert.ToInt32(textBoxSmallestMin.Text), Convert.ToInt32(textBoxSmallestMax.Text) };
-                sourceTemplate.DepositRanges[DepositSizes.Small] = new int[2] {Convert.ToInt32(textBoxSmallMin.Text), Convert.ToInt32(textBoxSmallMax.Text) };
+                sourceTemplate.DepositRanges[DepositSizes.Small] = new int[2] { Convert.ToInt32(textBoxSmallMin.Text), Convert.ToInt32(textBoxSmallMax.Text) };
                 sourceTemplate.DepositRanges[DepositSizes.Medium] = new int[2] { Convert.ToInt32(textBoxMediumMin.Text), Convert.ToInt32(textBoxMediumMax.Text) };
                 sourceTemplate.DepositRanges[DepositSizes.Large] = new int[2] { Convert.ToInt32(textBoxBiggestMin.Text), Convert.ToInt32(textBoxBigMax.Text) };
                 sourceTemplate.DepositRanges[DepositSizes.VeryLarge] = new int[2] { Convert.ToInt32(textBoxBiggestMin.Text), Convert.ToInt32(textBoxBiggestMax.Text) };

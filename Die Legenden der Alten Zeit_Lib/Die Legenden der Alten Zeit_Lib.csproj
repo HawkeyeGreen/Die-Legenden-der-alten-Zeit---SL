@@ -85,7 +85,7 @@
     <Compile Include="Nations\Settlements\SettlementManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ressources\Ressource.cs" />
-    <Compile Include="Ressources\Source.cs" />
+    <Compile Include="Ressources\SourceTemplate.cs" />
     <Compile Include="Universe\Aspects\Aspect.cs" />
     <Compile Include="Universe\GameSpace.cs" />
     <Compile Include="Universe\Map\Submaps\CreaturesMap.cs" />

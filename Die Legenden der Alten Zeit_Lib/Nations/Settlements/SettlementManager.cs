@@ -10,7 +10,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
 {
     public class SettlementManager
     {
-        public static string SETTLEMENT_MANAGEMENT_PATH = AppDomain.CurrentDomain.BaseDirectory + "//SettlementManagement//";
+        public static string SETTLEMENT_MANAGEMENT_PATH = "//SettlementManagement//";
         private static SettlementManager Instance;
 
         private Dictionary<int, string> registeredSettlementPaths;
@@ -18,12 +18,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
 
         private SettlementManager()
         {
-            if (!Directory.Exists(SETTLEMENT_MANAGEMENT_PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH))
             {
-                Directory.CreateDirectory(SETTLEMENT_MANAGEMENT_PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH);
 
             }
-            if (!File.Exists(SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
+            if (!File.Exists(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
             {
                 CreateData();
             }
@@ -31,14 +31,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
             {
                 LoadData();
             }
-            SettlementIDHelper.StartHelper(SETTLEMENT_MANAGEMENT_PATH);
+            SettlementIDHelper.StartHelper(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH);
 
         }
 
         private void LoadData()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(SettManagerData));
-            using (Stream file = File.OpenRead(SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
+            using (Stream file = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
             {
                 data = (SettManagerData)serializer.Deserialize(file);
             }
@@ -58,7 +58,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
             };
             registeredSettlementPaths = new Dictionary<int, string>();
             XmlSerializer serializer = new XmlSerializer(typeof(SettManagerData));
-            using (Stream file = File.OpenWrite(SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
+            using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
             {
                 serializer.Serialize(file, data);
             }
@@ -84,7 +84,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements
             data.SettlementIDs = registeredSettlementPaths.Keys.ToList();
             data.SettlementPaths = registeredSettlementPaths.Values.ToList();
             XmlSerializer serializer = new XmlSerializer(typeof(SettManagerData));
-            using (Stream file = File.OpenWrite(SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
+            using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + SETTLEMENT_MANAGEMENT_PATH + "ManagementData.xml"))
             {
                 serializer.Serialize(file, data);
             }

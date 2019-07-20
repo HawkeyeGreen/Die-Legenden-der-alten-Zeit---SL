@@ -21,9 +21,9 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(GlobalConfiguration.Documents))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents))
             {
-                Directory.CreateDirectory(GlobalConfiguration.Documents);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents);
             }
 
             if (Ressource.DoesRessourceExist(textBoxName.Text))
@@ -32,26 +32,29 @@ namespace Die_Legenden_der_alten_Zeit___SL
                 if (result == DialogResult.Yes)
                 {
                     File.Delete(Ressource.PATH + textBoxName.Text + ".xml");
-                    File.Delete(GlobalConfiguration.Documents + "//Ressources//" + textBoxName.Text + ".rtf");
+                    File.Delete(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//Ressources//" + textBoxName.Text + ".rtf");
                     MessageBox.Show("Alte Ressource gelöscht. Bitte erneut versuchen diese zu erstellen.");
                 }
             }
             else
             {
-                if (!Directory.Exists(GlobalConfiguration.Documents + "//Ressources//"))
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//Ressources//"))
                 {
-                    Directory.CreateDirectory(GlobalConfiguration.Documents + "//Ressources//");
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//Ressources//");
                 }
-                richTextBoxDescr.SaveFile(GlobalConfiguration.Documents + "//Ressources//" + textBoxName.Text + ".rtf");
+                richTextBoxDescr.SaveFile(AppDomain.CurrentDomain.BaseDirectory + GlobalConfiguration.Documents + "//Ressources//" + textBoxName.Text + ".rtf");
                 Ressource ressource = new Ressource(textBoxName.Text)
                 {
-                    DescriptionPath = "//Content//Documents//Ressources//" + textBoxName.Text + ".rtf"
+                    DescriptionPath = GlobalConfiguration.Documents + "//Ressources//" + textBoxName.Text + ".rtf"
                 };
                 Ressource.Save(ressource);
                 Close();
             }
         }
 
-        
+        private void NeueRessource_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

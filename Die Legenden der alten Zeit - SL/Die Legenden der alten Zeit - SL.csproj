@@ -73,6 +73,12 @@
     <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\NeuesArtefakt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\NeuesArtefakt.Designer.cs">
+      <DependentUpon>NeuesArtefakt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NeueSource.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -93,6 +99,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NeueRessource.resx">
       <DependentUpon>NeueRessource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\NeuesArtefakt.resx">
+      <DependentUpon>NeuesArtefakt.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NeueSource.resx">
       <DependentUpon>NeueSource.cs</DependentUpon>

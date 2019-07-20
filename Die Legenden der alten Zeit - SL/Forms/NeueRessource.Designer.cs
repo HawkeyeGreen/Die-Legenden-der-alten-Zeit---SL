@@ -90,6 +90,7 @@
             this.Controls.Add(this.label1);
             this.Name = "NeueRessource";
             this.Text = "NeueRessource";
+            this.Load += new System.EventHandler(this.NeueRessource_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.hauptmenüToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.beendenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -42,11 +43,14 @@
             this.button1 = new System.Windows.Forms.Button();
             this.ressourcesListBox1 = new System.Windows.Forms.ListBox();
             this.toolTipAspectListBox = new System.Windows.Forms.ToolTip(this.components);
-            this.speichernToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPageArtifacts = new System.Windows.Forms.TabPage();
+            this.listBoxArtifacts = new System.Windows.Forms.ListBox();
+            this.buttonNewArtifact = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.tabPageArtifacts.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -68,10 +72,17 @@
             this.hauptmenüToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.hauptmenüToolStripMenuItem.Text = "Hauptmenü";
             // 
+            // speichernToolStripMenuItem
+            // 
+            this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
+            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
+            this.speichernToolStripMenuItem.Text = "Speichern";
+            this.speichernToolStripMenuItem.Click += new System.EventHandler(this.SpeichernToolStripMenuItem_Click);
+            // 
             // beendenToolStripMenuItem
             // 
             this.beendenToolStripMenuItem.Name = "beendenToolStripMenuItem";
-            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.beendenToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.beendenToolStripMenuItem.Text = "Beenden";
             this.beendenToolStripMenuItem.Click += new System.EventHandler(this.beendenToolStripMenuItem_Click);
             // 
@@ -79,6 +90,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageArtifacts);
             this.tabControl1.Location = new System.Drawing.Point(0, 28);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -155,12 +167,35 @@
             this.ressourcesListBox1.Size = new System.Drawing.Size(120, 524);
             this.ressourcesListBox1.TabIndex = 0;
             // 
-            // speichernToolStripMenuItem
+            // tabPageArtifacts
             // 
-            this.speichernToolStripMenuItem.Name = "speichernToolStripMenuItem";
-            this.speichernToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.speichernToolStripMenuItem.Text = "Speichern";
-            this.speichernToolStripMenuItem.Click += new System.EventHandler(this.SpeichernToolStripMenuItem_Click);
+            this.tabPageArtifacts.Controls.Add(this.buttonNewArtifact);
+            this.tabPageArtifacts.Controls.Add(this.listBoxArtifacts);
+            this.tabPageArtifacts.Location = new System.Drawing.Point(4, 22);
+            this.tabPageArtifacts.Name = "tabPageArtifacts";
+            this.tabPageArtifacts.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageArtifacts.Size = new System.Drawing.Size(1426, 546);
+            this.tabPageArtifacts.TabIndex = 2;
+            this.tabPageArtifacts.Text = "Artefakte";
+            this.tabPageArtifacts.UseVisualStyleBackColor = true;
+            // 
+            // listBoxArtifacts
+            // 
+            this.listBoxArtifacts.FormattingEnabled = true;
+            this.listBoxArtifacts.Location = new System.Drawing.Point(9, 7);
+            this.listBoxArtifacts.Name = "listBoxArtifacts";
+            this.listBoxArtifacts.Size = new System.Drawing.Size(120, 524);
+            this.listBoxArtifacts.TabIndex = 0;
+            // 
+            // buttonNewArtifact
+            // 
+            this.buttonNewArtifact.Location = new System.Drawing.Point(135, 7);
+            this.buttonNewArtifact.Name = "buttonNewArtifact";
+            this.buttonNewArtifact.Size = new System.Drawing.Size(208, 74);
+            this.buttonNewArtifact.TabIndex = 1;
+            this.buttonNewArtifact.Text = "Neues hinzufügen ...";
+            this.buttonNewArtifact.UseVisualStyleBackColor = true;
+            this.buttonNewArtifact.Click += new System.EventHandler(this.ButtonNewArtifact_Click);
             // 
             // Form1
             // 
@@ -181,6 +216,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPageArtifacts.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -201,6 +237,9 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.ListBox ressourcesListBox2;
         private System.Windows.Forms.ToolStripMenuItem speichernToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageArtifacts;
+        private System.Windows.Forms.Button buttonNewArtifact;
+        private System.Windows.Forms.ListBox listBoxArtifacts;
     }
 }
 

@@ -13,7 +13,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
     public class Aspect
     {
         [NonSerialized]
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "//Aspects";
+        public static string PATH = "//Aspects";
         [NonSerialized]
         private static Dictionary<string, Aspect> Instances = new Dictionary<string, Aspect>();
 
@@ -93,7 +93,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
                 {
                     XmlSerializer serializer = new XmlSerializer(typeof(Aspect));
 
-                    using (Stream file = File.OpenRead(PATH + "\\" + name + ".xml"))
+                    using (Stream file = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + PATH + "\\" + name + ".xml"))
                     {
                         Instances[name] = (Aspect)serializer.Deserialize(file);
                         Hermes.getInstance().log("Loaded aspect: " + Instances[name].ToString(), "AspectLoader", 4);
@@ -117,9 +117,9 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
 
         public static void Save()
         {
-            if(!Directory.Exists(PATH))
+            if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(Aspect));
@@ -127,7 +127,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
             {
                 try
                 {
-                    using (Stream file = File.OpenWrite(PATH + "\\" + aspect.Name + ".xml"))
+                    using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + PATH + "\\" + aspect.Name + ".xml"))
                     {
                         serializer.Serialize(file, aspect);
                     }
@@ -141,8 +141,12 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe.Aspects
 
         public static List<string> GetAspectNames()
         {
+            if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
+            {
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
+            }
             List<string> Return = new List<string>();
-            IEnumerator<string> enumerator = Directory.EnumerateFiles(PATH).GetEnumerator();
+            IEnumerator<string> enumerator = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + PATH).GetEnumerator();
             while(enumerator.MoveNext())
             {
                 Return.Add(Path.GetFileNameWithoutExtension(enumerator.Current));

@@ -15,7 +15,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
     /// </summary>
     public class SourceTemplate
     {
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "\\SourceTemplates\\";
+        public static string PATH = "\\SourceTemplates\\";
         private static Dictionary<string, SourceTemplate> Instances = new Dictionary<string, SourceTemplate>();
 
         private SourceTData data;
@@ -81,18 +81,18 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public static SourceTemplate GetTemplate(string name)
         {
-            if(!Instances.ContainsKey(name))
+            if (!Instances.ContainsKey(name))
             {
-                if (!Directory.Exists(PATH))
+                if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
                 {
-                    Directory.CreateDirectory(PATH);
+                    Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
                 }
 
-                if (File.Exists(PATH + name + ".xml"))
+                if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH + name + ".xml"))
                 {
                     SourceTemplate template = new SourceTemplate();
                     XmlSerializer serializer = new XmlSerializer(typeof(SourceTData));
-                    using (Stream stream = File.OpenRead(PATH + name + ".xml"))
+                    using (Stream stream = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + PATH + name + ".xml"))
                     {
                         template.data = (SourceTData)serializer.Deserialize(stream);
                     }
@@ -146,13 +146,13 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public static List<string> GetSourcesTemplates()
         {
-            if (!Directory.Exists(PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             List<string> Return = new List<string>();
-            IEnumerator<string> enumerator = Directory.EnumerateFiles(PATH).GetEnumerator();
+            IEnumerator<string> enumerator = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + PATH).GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Return.Add(Path.GetFileNameWithoutExtension(enumerator.Current));
@@ -162,9 +162,9 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
 
         public static void Save()
         {
-            if (!Directory.Exists(PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(SourceTData));
@@ -173,7 +173,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
                 sourceT.PushDepositRangeToData();
                 try
                 {
-                    using (Stream file = File.OpenWrite(PATH + "\\" + sourceT.Name + ".xml"))
+                    using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + PATH + "\\" + sourceT.Name + ".xml"))
                     {
                         serializer.Serialize(file, sourceT.data);
                     }
@@ -188,15 +188,15 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
         public static void Save(SourceTemplate sourceT)
         {
             sourceT.PushDepositRangeToData();
-            if (!Directory.Exists(PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(RessourceData));
             try
             {
-                using (Stream file = File.OpenWrite(PATH + "\\" + sourceT.Name + ".xml"))
+                using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + PATH + "\\" + sourceT.Name + ".xml"))
                 {
                     serializer.Serialize(file, sourceT.data);
                 }
@@ -215,7 +215,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Ressources
                 return true;
             }
 
-            if (File.Exists(PATH + name + ".xml"))
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH + name + ".xml"))
             {
                 return true;
             }

@@ -19,6 +19,7 @@ using Die_Legenden_der_alten_Zeit___SL.Forms;
 using Die_Legenden_der_Alten_Zeit_Lib.Helper;
 using Die_Legenden_der_Alten_Zeit_Lib.Nations.Settlements;
 using Die_Legenden_der_Alten_Zeit_Lib;
+using Die_Legenden_der_Alten_Zeit_Lib.Artifacts;
 
 namespace Die_Legenden_der_alten_Zeit___SL
 {
@@ -35,23 +36,6 @@ namespace Die_Legenden_der_alten_Zeit___SL
             Hermes.DebugLevel = 5;
             UpdateAllFormData();
             TagCatalog.GetCatalog();
-            SettlementManager.GetInstance();
-
-            for (int i = 0; i < 2471; i++)
-            {
-                new Settlement(AppDomain.CurrentDomain.BaseDirectory + "//Settlements//Test//", "Testtown");
-            }
-
-            for (int i = 0; i < 1712; i++)
-            {
-                SettlementManager.GetInstance().RemoveSettlement(RandomHelper.GetHelper().GetGenerator().Next(0, 2471));
-            }
-
-            int t = RandomHelper.GetHelper().GetGenerator().Next(0, 1137);
-            for(int i = 0; i < t; i++)
-            {
-                new Settlement(AppDomain.CurrentDomain.BaseDirectory + "//Settlements//Second//", "And another one");
-            }
         }
 
         #region UpdateFuntions
@@ -93,6 +77,12 @@ namespace Die_Legenden_der_alten_Zeit___SL
             }
         }
 
+        private void UpdateArtifactTab()
+        {
+            listBoxArtifacts.ClearSelected();
+            listBoxArtifacts.Items.Clear();
+            listBoxArtifacts.Items.AddRange(ArtifactTemplate.GetArtifactTemplates().ToArray());
+        }
         #endregion
 
 
@@ -103,6 +93,7 @@ namespace Die_Legenden_der_alten_Zeit___SL
 
         private void beendenToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            TagCatalog.GetCatalog().Save();
             this.Close();
         }
 
@@ -140,6 +131,13 @@ namespace Die_Legenden_der_alten_Zeit___SL
         private void SpeichernToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettlementManager.GetInstance().Save();
+        }
+
+        private void ButtonNewArtifact_Click(object sender, EventArgs e)
+        {
+            NeuesArtefakt artefakt = new NeuesArtefakt();
+            artefakt.ShowDialog();
+            UpdateArtifactTab();
         }
     }
 }

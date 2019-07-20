@@ -10,7 +10,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Helper
 {
     public class TagCatalog
     {
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "//Tags//";
+        public static string PATH = "//Tags//";
         private static TagCatalog Instance;
         private TagDataDump data;
 
@@ -19,14 +19,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Helper
         private TagCatalog()
         {
             ArtifactTags = new HashSet<string>();
-            if(!Directory.Exists(PATH))
+            if(!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
-            if(File.Exists(PATH + "DataDump.xml"))
+            if(File.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH + "DataDump.xml"))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(TagDataDump));
-                using(Stream stream = File.OpenRead(PATH + "DataDump.xml"))
+                using(Stream stream = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + PATH + "DataDump.xml"))
                 {
                     data = (TagDataDump)serializer.Deserialize(stream);
                 }
@@ -59,8 +59,9 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Helper
 
         public void Save()
         {
+            data.ArtifactTags = ArtifactTags.ToList();
             XmlSerializer serializer = new XmlSerializer(typeof(TagDataDump));
-            using (Stream stream = File.OpenWrite(PATH + "DataDump.xml"))
+            using (Stream stream = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + PATH + "DataDump.xml"))
             {
                 serializer.Serialize(stream, data);
             }

@@ -8,7 +8,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe
 {
     public class GameSpace
     {
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "//Spaces//Game//";
+        public static string PATH = "//Spaces//Game//";
 
         private GameSpaceData data;
         public int Round
@@ -40,6 +40,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Universe
             get => data.StepMax;
             set => data.StepMax = value;
         }
+        public string Key { get; set; }
     }
 
     [Serializable]

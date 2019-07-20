@@ -8,6 +8,6 @@ namespace Die_Legenden_der_alten_Zeit___SL
 {
     public static class GlobalConfiguration
     {
-        public static string Documents = AppDomain.CurrentDomain.BaseDirectory + "//Content//Documents//";
+        public static string Documents = "//Content//Documents//";
     }
 }

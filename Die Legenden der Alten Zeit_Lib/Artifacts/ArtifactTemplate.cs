@@ -14,7 +14,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Artifacts
         [NonSerialized]
         private static Dictionary<string, ArtifactTemplate> Instances = new Dictionary<string, ArtifactTemplate>();
         [NonSerialized]
-        public static string PATH = AppDomain.CurrentDomain.BaseDirectory + "//ArtifactTemplates";
+        public static string PATH = "//ArtifactTemplates";
         [NonSerialized]
         public static readonly string SELECTIONMODE_INORDER = "InOrder";
         [NonSerialized]
@@ -23,6 +23,10 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Artifacts
         public int Stages { get; set; }
         public string StageSelectionMode { get; set; }
         public string Name { get; set; }
+        public string Culture { get; set; }
+        public int CultureWorth { get; set; }
+        public string BaseDescriptionRTF { get; set; }
+        public List<string> StageNames { get; set; }
         public List<string> RTF { get; set; }
         public List<string> Tags { get; set; }
         public List<int> WorkNeededForNextStage { get; set; }
@@ -77,7 +81,7 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Artifacts
             ArtifactTemplate ReturnMe = new ArtifactTemplate();
             XmlSerializer serializer = new XmlSerializer(typeof(ArtifactTemplate));
 
-            using (Stream file = File.OpenRead(PATH + "\\" + name + ".xml"))
+            using (Stream file = File.OpenRead(AppDomain.CurrentDomain.BaseDirectory + PATH + "\\" + name + ".xml"))
             {
                 ReturnMe = (ArtifactTemplate)serializer.Deserialize(file);
             }
@@ -86,14 +90,14 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Artifacts
 
         public static void SaveArtifactTemplate(ArtifactTemplate artifact)
         {
-            if (!Directory.Exists(PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             XmlSerializer serializer = new XmlSerializer(typeof(ArtifactTemplate));
 
-            using (Stream file = File.OpenWrite(PATH + "//" + artifact.Name + ".xml"))
+            using (Stream file = File.OpenWrite(AppDomain.CurrentDomain.BaseDirectory + PATH + "//" + artifact.Name + ".xml"))
             {
                 serializer.Serialize(file, artifact);
             }
@@ -101,13 +105,13 @@ namespace Die_Legenden_der_Alten_Zeit_Lib.Artifacts
 
         public static List<string> GetArtifactTemplates()
         {
-            if (!Directory.Exists(PATH))
+            if (!Directory.Exists(AppDomain.CurrentDomain.BaseDirectory + PATH))
             {
-                Directory.CreateDirectory(PATH);
+                Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + PATH);
             }
 
             List<string> Return = new List<string>();
-            IEnumerator<string> enumerator = Directory.EnumerateFiles(PATH).GetEnumerator();
+            IEnumerator<string> enumerator = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory + PATH).GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Return.Add(Path.GetFileNameWithoutExtension(enumerator.Current));
